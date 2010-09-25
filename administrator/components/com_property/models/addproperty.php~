@@ -137,7 +137,7 @@ class PropertyModelAddproperty extends JModel
             $post_data['cover_area'], $post_data['cover_veranda'], $post_data['swiming_pool'], $post_data['lift'], $post_data['parking_type'],
 			$post_data['p_cond'], addslashes($post_data['detail']), $post_data['built_year'], addslashes($post_data['video_link']), $post_data['sea_d'],
 			$post_data['air_d'], $post_data['stn_d'], $post_data['hiw_d'],$this->user->id, $post_data['property_detail_id'] );
-			print vsprintf( $sql,$detail_value ) ; jexit();
+// 			print vsprintf( $sql,$detail_value ) ; jexit();
 			$this->db->setQuery(vsprintf($sql,$detail_value));
 			return $this->db->query();
 		}

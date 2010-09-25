@@ -44,7 +44,7 @@
 </fieldset>
 <script type="text/javascript">
 jQuery(document).ready(function () {
-    jQuery('#addRow').live('click', function () {
+    jQuery('#addRow').live('click', function(){
         var quantity = jQuery('table[class^=imageTable]').length;
         var clonedRow = jQuery('#mainTable > tbody > tr:first').clone(true);
         var textID = clonedRow.find(':text').attr('id');
@@ -53,7 +53,6 @@ jQuery(document).ready(function () {
         });
 		clonedRow.find('th').text('Image '+(++quantity) + ' :');
 		clonedRow.find('sup').remove();
-
         clonedRow.attr('id', function () {
             return this.id + quantity;
         }).find(':text,:file').attr('id', function () {

@@ -36,6 +36,8 @@ class PropertyModelAddproperty extends JModel
 		$this->setRedirect( 'index.php?option=com_property', $msg );
 	}
 
+
+
 	public function save()
 	{
 		try
