@@ -19,8 +19,6 @@ class PropertyControllerProperty extends PropertyController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->db =& JFactory::getDBO();
-		$this->user =& JFactory::getUser();
 	}
 
 	public function __toString()
@@ -28,6 +26,13 @@ class PropertyControllerProperty extends PropertyController
 		$statement = "<br/>This is <b>".__CLASS__."</b> Class.<br/>Defined in <i>".__FILE__."</i>";
 		return $statement;
  	}
+
+	/**
+	* function to store basic detail of a property via calling respective model
+	* @access public
+	* @code keshav mohta
+	* @return on specific page
+	*/
 
 	public function storeProperty()
 	{
@@ -111,6 +116,33 @@ class PropertyControllerProperty extends PropertyController
 		//Redirect
 		$this->setRedirect($link, $msg);
 	}
+
+	public function storePropertyImages()
+	{
+		// perform token check (prevent spoofing)
+		$token	= JUtility::getToken();
+		if(!JRequest::getInt($token, 0, 'POST'))
+		{
+			JError::raiseError(403, JText::_('REQUESTFORBIDDEN'));
+		}
+		//Get the model to use the function
+		$propertyModel = $this->getModel('addproperty');
+		$do  = (intval($_POST['property_id']) !== 0) ? "UPDATED " : "ADDED ";
+		if($propertyModel->storePropertyImages())
+		{
+			$msg = " Property Images $do successfully";
+			$link = JRoute::_('index.php?option=com_property');
+		}
+		else
+		{
+			$msg = "Kindly have a look on form,Something may be wrong on Details(-_-)";
+			$link = JRoute::_('index.php?option=com_property');
+		}
+		$link = str_replace("&amp;", "&", $link);
+		//Redirect
+		$this->setRedirect($link, $msg);
+	}
+
 
 	public function deleteProperty()
 	{

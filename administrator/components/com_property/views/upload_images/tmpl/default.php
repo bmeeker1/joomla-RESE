@@ -21,7 +21,7 @@
 				<tr>
 					<td align="right" valign="top">Image:</td>
 					<td align="left" valign="top" >
-						<input type="file" name="main_image[]" id="main_image" size="60" >
+						<input type="file" name="property_image[]" id="property_image" size="60" >
 					</td>
 				</tr>
 			</table>
@@ -30,7 +30,17 @@
 	</tbody>
 	<tfoot>
         <tr>
-			<td colspan="2"><input type="button" id="addRow" value="Add More" style="cursor:pointer;margin-top:5px;"/></td>
+			<td><input type="button" id="addRow" value="Add More" style="cursor:pointer;margin-top:5px;"/></td>
+		</tr>
+		<tr>
+			<td align="right">
+				<input type="submit" value="Upload" name="upload" class="submit" id="upload" />
+				<?php if(!empty($this->property_id)) { ?>
+				<input type="button" name="Back" onclick="javascript:history.go(-1)" value="Back" />
+				<?php } else { ?>
+				<input type="reset"  value="Clear" name="Clear" class="submit" />
+				<?php } ?>
+			</td>
 		</tr>
 	</tfoot>
 	</table>
@@ -49,9 +59,9 @@ jQuery(document).ready(function () {
         var clonedRow = jQuery('#mainTable > tbody > tr:first').clone(true);
         var textID = clonedRow.find(':text').attr('id');
         clonedRow.find('label').attr('for', function () {
-            return textID + quantity;
+            return textID + (++quantity);
         });
-		clonedRow.find('th').text('Image '+(++quantity) + ' :');
+		clonedRow.find('th').text('Image '+ quantity + ' :');
 		clonedRow.find('sup').remove();
         clonedRow.attr('id', function () {
             return this.id + quantity;

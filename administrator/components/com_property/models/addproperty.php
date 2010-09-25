@@ -36,7 +36,12 @@ class PropertyModelAddproperty extends JModel
 		$this->setRedirect( 'index.php?option=com_property', $msg );
 	}
 
-
+	/**
+	* function to store ( Insert or Update ) basic detail of a property
+	* @access public
+	* @code keshav mohta
+	* @return true on succesfll insertion/updation
+	*/
 
 	public function save()
 	{
@@ -74,6 +79,13 @@ class PropertyModelAddproperty extends JModel
 		}
 	}
 
+	/**
+	* function to store ( Insert or Update ) contact detail of a property
+	* @access public
+	* @code keshav mohta
+	* @return true on succesfll insertion/updation
+	*/
+
 	public function storeContact()
 	{
 		try
@@ -105,6 +117,12 @@ class PropertyModelAddproperty extends JModel
 		}
 	}
 
+	/**
+	* function to store ( Insert or Update )  all details/features of a property
+	* @access public
+	* @code keshav mohta
+	* @return true on succesfll insertion/updation
+	*/
 
 	public function storeDetails()
 	{
@@ -149,9 +167,100 @@ class PropertyModelAddproperty extends JModel
 
 	}
 
+
+	/**
+	* function to store ( Insert or Update )  all images of a property into databse as well as their thumbs also
+	* @access public
+	* @code keshav mohta
+	*/
+
+	public function storePropertyImages()
+	{
+		try
+		{
+			$post_data = JRequest::get('POST');
+			JRequest::watch($post_data);
+			JRequest::watch($_FILES);
+			JRequest::watch($_FILES['property_image'],1,0);
+			//Insert all images related to the ad
+			foreach ($_FILES['property_image'] as $key => &$value) { echo "<br/>Error:".$key['error']; }
+			die;
+			foreach ($_FILES['property_image'] as $key => &$value)
+			{
+				echo "<br/>".__LINE__." Inside image foreach";
+				if ( ($value['error'] == 0) && ($value['size'] > 0) )
+				{
+					echo "<br/>".__LINE__." Inside if";
+					echo $value; die;
+					$imageResized = $this->imageResize($value);
+					JRequest::watch($imageResized,1,1);
+					//Delete data from the database if edit property and status is 'pending for approval'
+					if ($post_data['image_id'] && $postdata['property_id'] )
+					{
+						echo "<br/>".__LINE__." Inside nested if";
+
+						$query = "SELECT image_path FROM #__property_image  WHERE image_id = %d ";
+
+						echo "<br/>".__LINE__." Image Qry";
+						print sprintf($query, $imgid);
+
+						$this->db->setQuery(sprintf($query, $pid));
+						$image_path = $this->db->loadResult(); // return image  path
+						//JRequest::watch($arr_image_id);
+						foreach ($arr_image_id as &$imgkey)
+						{
+							if( is_file(JPATH_SITE.DS.$image_path) )
+							{
+								@unlink(JPATH_SITE.DS.$image_path);
+							}
+							$delqry = "DELETE FROM #__property_image WHERE image_id =%d";
+
+							echo "<br/>".__LINE__." Old Image delete Qry";
+							print sprintf($delqry, $imgid);
+
+							$this->db->setQuery(sprintf($delqry, $imgid));
+							echo "<br/>".__LINE__." Old Image Deleted:".$this->db->query();
+							echo  "<br/>".__LINE__." Affected Rows:".$this->db->getAffectedRows();
+
+						/** NOTE: on deleteing image FROM images table , record referenceing that image id
+						* in table_imagead  will be deleted automatically due to foreign key constraints */
+// 							$imgadqry = "DELETE FROM #__{$suffix}imagead WHERE image_id=%d";
+// 							$this->db->setQuery(vsprintf($imgadqry, $imgkey['image_id']));
+// 							echo "<br/>".__LINE__."ImageAD Deleted:".$this->db->query();
+
+						}
+					}
+
+					$image_query  = (intval($_POST['property_id']) !== 0) ? "UPDATE " : "INSERT INTO ";
+					$image_query .= " #__property_image SET
+															property_id=%d,
+															image_title='%s',
+															image_path='%s',";
+					$image_query .= (intval($_POST['property_id']) !== 0) ? " updated_by=%d WHERE image_id=%d "
+					        									  		  : " added_by=%d,added_date=NOW() ";
+					$image_detail = array ($post_data['property_id'], $post_data['image_title'], $imageResized['image_path'], $this->user->id,
+										   $post_data['image_id'] );
+					print vsprintf( $image_query,$image_detail ) ; jexit();
+					//$this->db->setQuery(vsprintf($sql,$detail_value));
+					//return $this->db->query();
+
+					//$thumb_image_info = $this->image_get_info(JPATH_SITE . DS . $imageResized['thumb_path']);
+					//$thumb_image_info['title'] = $key.' thumb';
+					//jRequest::watch($thumb_image_info,0,__LINE__,1);
+					// insert original image's thumb information into table_image and table_imagead simultaneously
+					//$this->insertImageData($image_query,$thumb_image_info, $ad_id,'ad');
+				}
+			}
+		}
+		catch(Exception $e){
+				//who cares!
+		}
+
+	}
+
 	/**
 	* Function to save origianl image and thumbail image on destination folder
-	* modified by keshav mohta
+	* @code keshav mohta
 	*/
 	public function imageResize($image)
 	{
@@ -243,32 +352,6 @@ class PropertyModelAddproperty extends JModel
 		}
 	}
 
-
-	public function insertImageData($image_query, $image_info, $id, $about=NULL)
-	{
-// 		JRequest::watch(func_get_args(),1,0);
-// 		echo "<br/>".__LINE__."image query:";
-// 		print sprintf($image_query,$image_info['type'],addslashes($image_info['title']),$image_info['path'],$image_info['size'],$id);
-
-		//Inserting data into Images table
-	    $this->db->setQuery(sprintf($image_query,$image_info['type'],addslashes($image_info['title']),$image_info['path'],$image_info['size'],$id));
-		echo "<br/>".__LINE__." Image Added:".$this->db->query();
-		echo "<br/>".__LINE__." Last insert ID:".$insert_id = $this->db->insertid();
-		echo "<br/>".__LINE__." Affected Rows:".$this->db->getAffectedRows();
-		// insert image id and ad id in imagead table
-		if (!empty($about))
-		{
-			$imagead_query = " INSERT INTO #__imagead (image_id, ad_id) VALUES (%d, %d)";
-
-			echo "<br/>".__LINE__."image Ad Query:";
-			print sprintf($imagead_query, $insert_id, $id);
-
-			$this->db->setQuery(sprintf($imagead_query, $insert_id, $id));
-
-			echo "<br/>".__LINE__."Image AD table added:".$this->db->query();
-			echo "<br/>".__LINE__." Affected Rows:".$this->db->getAffectedRows();
-		}
-	}
 
 
 
