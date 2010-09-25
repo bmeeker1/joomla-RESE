@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+    <name>Reddiv</name> 
+	<creationDate>Aug 09, 2010</creationDate>
+	<copyright>All rights reserved by Agile Technosys Pvt. Ltd.</copyright>	
+	<license>GPL 2.0</license>
+	<author>Keshav Mohta</author>
+	<authorEmail>agile.keshav@gmail.com</authorEmail> 
+	<authorUrl>www.agiletechnosys.com</authorUrl>
+	<version>1.5.0</version>
+    <description>A simple module having Red div.</description>
+	
+    <files>
+        <filename>mod_reddiv.xml</filename>
+        <filename module="mod_reddiv">mod_reddiv.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+        <filename>tmpl/default.php</filename>
+        <filename>tmpl/index.html</filename>
+    </files>
+    <params> 
+			<!--optional paramaters-->
+    </params>
+</install>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<install type="component" version="1.5.0">
+	<name>property</name>
+	<!-- The following elements are optional and free of formatting conttraints -->
+	<creationDate>10 September, 2010</creationDate>
+	<author>Keshav Mohta</author>
+	<authorEmail>xkeshav@gmail.com</authorEmail>
+	<copyright>(C) 2010 All rights reserved.</copyright>
+	<license>GNU/GPL</license>
+	<!--  The version string is recorded in the components table -->
+	<version>1.5.0</version>
+	<!-- The description is optional and defaults to the name -->
+	<description>
+		<![CDATA[<p>This is property component for joomla 1.5 (no legacy mode!)
+			<br />By this component you can add/edit/view property details
+		</p>]]>
+	</description>
+
+	<!-- Install Database Section -->
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">install.sql</file>
+		</sql>
+	</install>
+
+	<!-- Uninstall Database Section -->
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">uninstall.sql</file>
+		</sql>
+	</uninstall>
+	<!-- Site Main File Copy Section-->
+	<files folder ="front">
+		<filename>index.html</filename>
+		<filename>property.php</filename>
+		<filename>controller.php</filename>
+		<folder>controllers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+		<folder>js</folder>
+		<folder>css</folder>
+		<folder>images</folder>
+	</files>
+	<administration>
+		<!-- Administration Menu Section -->
+		<menu img="components/com_property/images/property.png" >Property</menu>
+		<submenu>
+			<!-- Note that all & must be escaped to &amp; for the file to be valid XML and be parsed by the installer -->
+			<!--<menu link="option=com_property&amp;view=sellProperty">Sell</menu>
+			<menu link="option=com_property&amp;view=buyProperty">Buy</menu>
+			<menu link="option=com_property&amp;view=rentProperty">Rent</menu>-->
+		</submenu>
+
+		<!-- Administration Main File Copy Section -->
+		<!-- Note the folder attribute: This attribute describes the folder
+			 to copy FROM in the package to install therefore files copied
+			 in this section are copied from /admin/ in the package -->
+		<files folder="back">
+			<filename>index.html</filename>
+			<filename>property.php</filename>
+			<filename>admin.controller.php</filename>
+			<filename>install.sql</filename>
+			<filename>uninstall.sql</filename>
+			<folder>controllers</folder>
+			<folder>models</folder>
+			<folder>views</folder>
+			<folder>js</folder>
+			<folder>css</folder>
+			<folder>images</folder>
+		</files>
+	</administration>
+</install>

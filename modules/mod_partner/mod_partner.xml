@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+	<name>partner</name> 
+	<creationDate>Aug 13, 2010</creationDate>
+	<copyright>All rights reserved by Agile Technosys Pvt. Ltd.</copyright>	
+	<license>GPL 2.0</license>
+	<author>Keshav Mohta</author>
+	<authorEmail>agile.keshav@gmail.com</authorEmail> 
+	<authorUrl>www.agiletechnosys.com</authorUrl>
+	<version>1.5.0</version>
+    <description>partner module having to become active partner of this website</description>
+	
+    <files>
+        <filename>mod_partner.xml</filename>
+        <filename module="mod_partner">mod_partner.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+        <filename>tmpl/default.php</filename>
+        <filename>tmpl/index.html</filename>
+    </files>
+    <params> 
+		<!--optional paramaters-->
+    </params>
+</install>

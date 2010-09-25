@@ -1,0 +1,22 @@
+<?php // no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
+<div class="rghtbtm">
+	<div class="mainlft">
+		<div class="lftcorntop">
+			<img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/manGimg.png" alt="image" />
+		</div>
+		<div class="lftcorn">
+			<h3>Lorem Ipsum is simply dummy</h3>
+			<div class="corninn"><p>Lorem Ipsum is simply <br/> dummy text of the<br/> printing and typesetting </p></div>
+			<div class="cornbtm">
+				<img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/eraimg.png" alt="image" />
+			</div>
+		</div>
+	</div>
+	<div class="mainrght">
+		<img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/erabigimg.png" alt="image" />
+		<div class="mainrghtinn">
+				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has</p> 
+		</div>
+	</div>
+</div>

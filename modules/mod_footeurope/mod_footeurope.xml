@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+	<name>footeurope</name> 
+	<creationDate>Aug 13, 2010</creationDate>
+	<copyright>All rights reserved by Agile Technosys Pvt. Ltd.</copyright>	
+	<license>GPL 2.0</license>
+	<author>Keshav Mohta</author>
+	<authorEmail>agile.keshav@gmail.com</authorEmail> 
+	<authorUrl>www.agiletechnosys.com</authorUrl>
+	<version>1.5.0</version>
+    	<description>Footer module of euro block</description>
+	
+    <files>
+        <filename>mod_footeurope.xml</filename>
+        <filename module="mod_footeurope">mod_footeurope.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+        <filename>tmpl/default.php</filename>
+        <filename>tmpl/index.html</filename>
+    </files>
+    <params> 
+		<!--optional paramaters-->
+    </params>
+</install>

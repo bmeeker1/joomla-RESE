@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+    <name>sharebox</name> 
+	<creationDate>Aug 06, 2010</creationDate>
+	<copyright>All rights reserved by Agile Technosys Pvt. Ltd.</copyright>	
+	<license>GPL 2.0</license>
+	<author>Keshav Mohta</author>
+	<authorEmail>agile.keshav@gmail.com</authorEmail> 
+	<authorUrl>www.agiletechnosys.com</authorUrl>
+	<version>1.5.0</version>
+    <description>A module having all links of social bookmark and social networking sites</description>
+	
+    <files>
+        <filename>mod_sharebox.xml</filename>
+        <filename module="mod_sharebox">mod_sharebox.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+        <filename>tmpl/default.php</filename>
+        <filename>tmpl/index.html</filename>
+    </files>
+    <params> 
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+    </params>
+</install>

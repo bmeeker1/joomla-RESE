@@ -1,0 +1,340 @@
+<div id="maincont">
+    		<div class="banner">
+      			<div class="bannerlft">
+        			<div class="lftinn">					
+					<?php if ($this->countModules( 'propsearch' )) { ?>
+  						<jdoc:include type="modules" name="propsearch" style="xhtml" />
+					<?php } else { ?>
+          				<h3>Quick Property Search</h3>
+						<ul class="bannerlist reset">
+							<li>
+								<select>
+									<option>Select Country</option>
+								</select>
+							</li>
+							<li>
+								<select>
+									<option>Select Country</option>
+								</select>
+							</li>
+							<li>
+								<select>
+									<option>Select Country</option>
+								</select>
+							</li>
+							<li>
+								<select>
+									<option>Select Country</option>
+								</select>
+							</li>
+							<li>
+								<select>
+									<option>Select Country</option>
+								</select>
+							</li>
+							<li>
+								<select style="width:100px; margin-right:10px">
+									<option>Min Price</option>
+								</select>
+								<select style="width:100px">
+									<option>Max Price</option>
+								</select>
+							</li>								
+						</ul>
+						<input class="serbtn" type="submit" value="Search" name="serbtn" />
+					<?php } ?>
+        			</div>
+     			</div><!-- end of leftbanner -->	
+				<?php if ($this->countModules('flashbanner')) { ?>
+  					<jdoc:include type="modules" name="flashbanner" style="xhtml" />
+				<?php } else { ?>
+				<div class="bannerrght fl">
+					<a class="lftarw" href="#">&nbsp;</a><img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/bannerimg.png" alt="image" /><a class="rghtarw" href="#">&nbsp;</a>
+        			<div class="bannerdesc">
+          				<h3>Apartment / Studio for Sale 5 Rooms Mesopotamia</h3>
+          				<p>KASTORIA Diamerisma 120m center Messopatamias. 4 bedrooms, 2 bathrooms, lounge, kitchen, fireplace.</p>
+        			</div>
+				</div>
+				<?php } ?>
+    		</div>
+  	</div>
+</div>
+<?php if($this->countModules('topblock')) : ?>
+	<div class="topblock width100 float-left">
+		<jdoc:include type="yoomodules" name="topblock" style="yoo" />
+	</div>
+	<?php else : ?>
+	<div id="reddiv">
+		<div class="reddivinn">Lorem Ipsum is simply dummy text of the printing.Lorem Ipsum</div> 
+	</div>
+<?php endif; ?>
+	<div id="page-middle">
+		<div class="page-middle-1">
+			<div class="page-middle-2">
+				<div class="wrapper">
+
+					<div id="middle">
+						<div id="middle-expand">
+		
+							<div id="main">
+								<div id="main-shift">
+				
+									<div class="main-wrapper-t1">
+										<div class="main-wrapper-t2">
+											<div class="main-wrapper-t3"></div>
+										</div>
+									</div>
+									<div class="main-wrapper-1 <?php if($this->countModules('breadcrumbs')) {?> with-breadcrumbs <?php } ?>" >
+									<?php if ($this->countModules('breadcrumbs')) : ?>
+										<div id="breadcrumbs">
+											<jdoc:include type="yoomodules" name="breadcrumbs" />
+										</div>
+									<?php endif; ?>
+										<div id="mainmiddle">
+											<div id="mainmiddle-expand">
+
+												<div id="content">
+													<div id="content-shift">	
+														<div class="floatbox">
+														 <?php if($_GET['view'] =="frontpage" ) { ?> 
+															<jdoc:include type="message" />
+															<jdoc:include type="component" />
+														 <?php } ?>
+														</div>
+													</div>
+												</div><!-- content end -->
+
+												<div id="wrapper1">
+													<div class="mid1div">
+														<div class="middivlft">
+														<?php if ($this->countModules('maptab')) : ?>
+															<jdoc:include type="modules" name="maptab" style="xhtml" />
+														<?php else :?>
+															<div class="lfttop">
+																<ul class="toplist reset">
+																	<li class="active"><a href="#" class="real">Real Estate</a></li>
+																	<li><a href="#" class="offc">Office Associates</a></li>
+																</ul>
+																<div class="imgdiv"><img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/mapimg.png" alt="image" /></div>
+															</div>
+														<?php endif;?>
+														<?php if ($this->countModules( 'openhouse' )) : ?>
+													 		<jdoc:include type="modules" name="openhouse" style="xhtml"/>
+														<?php else : ?>
+															<div class="lftbtm">
+																<img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/famimg.png" alt="image" />
+																<div class="btmdesc">
+																	<h3>OPEN HOUSE</h3>
+																		<p>Meet the new propulsion system property applies only to <span>ERA</span>, with impressive results.</p>
+																		<a href="#">&nbsp;</a>
+																</div>
+															</div>
+														<?php endif;?>
+														<?php if ($this->countModules( 'sharebox' )) : ?>
+															<jdoc:include type="modules" name="sharebox" style="xhtml" />
+														<?php else : ?>
+															<div class="bluediv">
+																<p>Lorem Ipsum is simply dummy text </p>
+																<div class="blueinn">
+																	<a href="#"><img class="fl" src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/eraimg.png" alt="image" /></a>
+																	<div class="blueimgs">
+																		<a href="#"><img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/tbg.png" alt="image" /></a>
+																		<a href="#"><img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/youtubebg.png" alt="image" /></a>
+																		<a href="#"> <img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/inbg.png" alt="image" /></a>
+																		<a href="#"> <img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/fbg.png" alt="image" /></a>
+																	</div>
+																</div>
+															</div>
+														<?php endif; ?>
+														</div>
+														<div class="middivrght">	
+														<?php if ($this->countModules( 'advertise' )) : ?>
+															<jdoc:include type="modules" name="advertise" style="xhtml" />
+														<?php  else : ?>
+															<div class="rghttop">
+																<!--<div class="toplft fl">
+																	<img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/soldimg.png" alt="image" />
+																</div>-->
+																<div class="toprght fl"><img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/homeimg.gif" alt="image" />
+																	<div class="toprghtinn"><p>Is ERA Right for <br/>you? for a<br/> sucessful Sale...</p></div>
+																</div>
+															</div>
+															<?php endif;?>
+															<?php if ($this->countModules( 'partner' )) : ?>
+																<jdoc:include type="modules" name="partner" style="xhtml" />
+															<?php  else : ?>
+															<div class="rghttop">
+																<!--<div class="toplft1 fl">
+																	<img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/skyblueimg.png" alt="image" />
+																</div>-->
+																<div class="topmid1">
+																	<img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/eraimg1.png" alt="image" /><!--<a href="#">&nbsp;</a>-->
+																</div>
+																<div class="toprght1 fl">
+																	<h3>Become a Partner</h3>
+																	<p>The ERA leader and gives Partners the largest supply in the industry, 
+																		with the rate rising to 80%. Learn how to earn more in one of the officesERA.
+																	</p>
+                                                                    <a href="#">&nbsp;</a>
+																</div>
+															</div>
+															<?php endif;?>
+															<?php if ($this->countModules( 'latestprop' )) : ?>
+																<jdoc:include type="modules" name="latestprop" style="xhtml" />
+															<?php else : ?>
+															<div class="rghtbtm">
+																<!--<div class="mainlft">
+																	<div class="lftcorntop"><img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/manGimg.png" alt="image" /></div>
+																	<div class="lftcorn">
+																		<h3>Lorem Ipsum is simply dummy</h3>
+																		<div class="corninn"><p>Lorem Ipsum is simply <br/> dummy text of the<br/> printing and typesetting </p></div>
+																		<div class="cornbtm">
+																			<img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/eraimg.png" alt="image" />
+																		</div>
+																	</div>
+																</div>-->
+																<div class="mainrght">
+																	<img src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/erabigimg.png" alt="image" />
+																	<div class="mainrghtinn">
+																			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has</p> 
+																	</div>
+																</div>
+															</div>
+															<?php endif; ?>
+															<?php if ($this->countModules( 'latestnews' )) : ?>
+																<jdoc:include type="modules" name="latestnews" style="xhtml" />
+															<?php else : ?>
+															<div class="lastbtm">
+										   <div class="btmdesc"><img class="fl" src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/fornews.png" alt="image" />                                                        
+															    <div class="descinn fl"><p> <span>ERA</span> sponsors in qualifying to EURO </p>
+															    <span>2012.</span>
+                                                                <p><a href="#">&nbsp;</a></p></div>
+																		</div>
+                                                                        <div class="btmdesc"><img class="fl" src="<?php echo $this->baseurl ?>/templates/yoo_symphony/images/fornews.png" alt="image" />                                                        
+															    <div class="descinn fl"><p><span>ERA</span> sponsors in qualifying to EURO </p>
+															    <span>2012.</span>
+                                                                <p><a href="#">&nbsp;</a></p></div>
+																		</div>  
+																<!--<div class="lastbtminn">
+																	<ul class="listing reset">
+																		<li>
+																			<p>H <span>yoo_symphony</span> sponsors in qualifying to EURO </p>
+																			<span>2012.</span><p><a href="#">Click here for more </a></p>
+																		</li>
+																		<li>
+																			<p>H <span>yoo_symphony</span> sponsors in qualifying to EURO </p>
+																			<span>2012.</span><p><a href="#">Click here for more </a></p>
+																		</li>
+																		<li class="BrdbtmN">
+																			<p>H <span>yoo_symphony</span>  sponsors in qualifying to EURO </p>
+																			<span>2012.</span><p><a href="#">Click here for more </a></p>
+																		</li>
+																	</ul>
+																</div>-->
+															</div>
+                                                            
+															<?php endif; ?>
+														</div>
+													</div> <!-- end of middiv -->
+												</div><!-- end of wrapper1 -->
+											</div>
+										</div><!-- mainmiddle end -->
+									</div><!-- wrapper 1 end -->
+									<div class="main-wrapper-b1">
+										<div class="main-wrapper-b2">
+											<div class="main-wrapper-b3"></div>
+										</div>
+									</div>	
+								</div>
+							</div>
+							
+							<?php if($this->countModules('left')) : ?>
+							<div id="left">
+								<jdoc:include type="yoomodules" name="left" style="yoo" />
+							</div>
+							<?php endif; ?>
+							
+							<?php if($this->countModules('right')) : ?>
+							<div id="right">
+								<jdoc:include type="yoomodules" name="right" style="yoo" />
+							</div>
+							<?php endif; ?>
+						</div>
+					</div>
+					<div class="btm1div">&nbsp;</div>
+					<div class="ERAcont">
+						<p>
+							<?php if ($this->countModules( 'footmem' )) : ?>
+								<jdoc:include type="modules" name="footmem" style="xhtml" />
+							<?php else : ?>
+								<a href="#" class="memarea">member</a>
+							<?php endif; ?>
+							<?php if ($this->countModules( 'footworld' )) : ?>
+								<jdoc:include type="modules" name="footworld" style="xhtml" />
+							<?php else : ?>
+								<a href="#" class="Eworld">eworld</a>
+							<?php endif; ?>	
+							<?php if ($this->countModules( 'footeurope' )) : ?>
+								<jdoc:include type="modules" name="footeurope" style="xhtml" />
+							<?php else : ?>									
+								<a href="#" class="Eur">europe</a>
+							<?php endif; ?>
+							<?php if ($this->countModules( 'footusa' )) : ?>
+								<jdoc:include type="modules" name="footusa" style="xhtml" />
+							<?php else : ?>
+								<a href="#" class="usa">usa</a>
+							<?php endif; ?>
+							<?php if ($this->countModules( 'footcra' )) : ?>
+								<jdoc:include type="modules" name="footcra" style="xhtml" />
+							<?php else : ?>
+								<a href="#" class="cra">cra</a>
+							<?php endif; ?>
+						</p>
+					</div>
+					</div> <!-- mainbottom end --> 
+				</div>		
+			</div>
+		</div>
+	</div><!--page middle ends -->
+<!--close of yoo theme-->
+
+<div id="page-footer">
+	<div class="wrapper">
+		<?php if ($this->countModules( 'footerlinks' )) : ?>
+			<jdoc:include type="modules" name="footerlinks" style="xhtml" />
+		<?php  else : ?>
+		<div id="footer" class="normTxt">
+			<a href="#">Austria</a> |
+			<a href="#">Belgium</a> |
+			<a href="#">Bulgaria</a> |
+			<a href="#">Cyprus</a> |
+			<a href="#">Czech Republic</a> |
+			<a href="#">France</a> |
+			<a href="#">Germany</a> |
+			<a href="#">Greece</a> |
+			<a href="#">Ireland</a> |
+			<a href="#">Italy</a> |
+			<a href="#">Luxembourg</a>|
+			<a href="#">Netherlands</a> |
+			<a href="#">Portugal</a> |
+			<a href="#">Romania</a> |
+			<a href="#">Spain</a> |
+			<a href="#">Sweden</a> |
+			<a href="#">Switzerland</a> |
+			<a href="#">Turkey Netherlands</a> |
+			<a href="#">Portugal</a> |
+			<a href="#">Romania</a> |
+			<a href="#">Spain</a> |
+			<a href="#">Sweden</a> |
+			<a href="#">Switzerland</a> |
+			<a href="#">Turkey</a>
+			<i>2002-2010 ERA Europe.Each ERA office is independent of both ownership and management.</i>
+		</div>
+		<?php endif; ?>
+		<div id="footer">
+			<a class="anchor" href="#page"></a>
+			<jdoc:include type="yoomodules" name="footer" />
+			<jdoc:include type="yoomodules" name="debug" />
+		</div><!-- footer end -->
+	</div>
+</div>
