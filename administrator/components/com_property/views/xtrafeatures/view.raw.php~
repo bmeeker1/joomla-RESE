@@ -4,7 +4,7 @@
  *
  * @author keshav mohta
  * @package Joomla
- * @subpackage `View` of add property
+ * @subpackage `Raw form ` of add detail of a property
  * @license Copyright (c) 2010 - All Rights Reserved
  *
  */
@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport( 'joomla.application.component.view');
 
-class PropertyViewContact extends JView
+class PropertyViewXtrafeatures extends JView
 {
    /**
 	* Method to display View
@@ -23,9 +23,10 @@ class PropertyViewContact extends JView
 	*/
 	function display($tpl = null)
 	{
-		$property_id = JRequest::getVar('pid', NULL, 'GET');
-//     	$title_text = empty($property_id)? JText::_( 'Add' ) : JText::_( 'Update' );
-// 		JToolBarHelper::title( JText::_(" $title_text Property" ), 'user.png');
+		echo $_SESSION['prop_id'];
+		$property_id = JRequest::getVar('pdid', NULL, 'GET');
+     	$title_text = empty($property_detail_id)? JText::_( 'Add' ) : JText::_( 'Update' );
+ 		JToolBarHelper::title( JText::_(" $title_text Property Details" ), 'user.png');
 // 		JToolBarHelper::save();
 // 		if (empty($prop_id))  {
 // 			JToolBarHelper::cancel();
@@ -39,26 +40,24 @@ class PropertyViewContact extends JView
 		$model =& $this->getModel();
 		//$base_model=$this->getModel('Property');
 		//JRequest::watch($base_model);
-		if(!empty($property_id) )
+		if(!empty($property_detail_id) )
 		{
-			$prop_data=$base_model->getPropertyDetail($property_id);
+			$detail_data=$base_model->getPropertyMoreDetail($property_detail_id);
 			$district_list=$base_model->getDistrictList($prop_data['property_province_id']);
 			$city_list=$base_model->getCityList($prop_data['property_district_id']);
-			//JRequest::watch($prop_data);
+			//JRequest::watch($detail_data);
 		}
 
-		//$type_list=$base_model->getPropertyType();
-		$province_list=$base_model->getProvinceList();
+		$condition_list=$base_model->getPropertyCondition();
 		//JRequest::watch($type_list);
 
 		//Assigning variable to view object so that it can be retrieve in default.php
-// 		$this->assignRef('property_id',$property_id);
-// 		$this->assignRef('title_text',$title_text);
-//		$this->assignRef('type_list', $type_list);
-		$this->assignRef('province_list', $province_list);
+		$this->assignRef('property_detail_id',$property_detail_id);
+		$this->assignRef('title_text',$title_text);
+		$this->assignRef('condition_list', $condition_list);
 // 		$this->assignRef('district_list', $district_list);
 // 		$this->assignRef('city_list', $city_list);
-// 		$this->assignRef('prop_data', $prop_data);
+// 		$this->assignRef('detail_data', $detail_data);
 
 		parent::display($tpl);
     }

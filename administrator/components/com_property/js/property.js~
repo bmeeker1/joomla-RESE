@@ -46,31 +46,31 @@ jQuery(function () {
         return false;
     });
 
-//  	/* Form 2 */
-// 	jQuery('#propertyDetailForm').bind('submit', function() {
-// 		jQuery(this).ajaxSubmit({ success: contactForm });
-// 		// return false to prevent normal browser submit and page navigation
-//         return false;
-//     });
-//
-// 	/* Form 3 */
-// 	jQuery('#propertyDetailForm').bind('submit', function() {
-// 		jQuery(this).ajaxSubmit({ success: ImageForm });
-// 		// return false to prevent normal browser submit and page navigation
-//         return false;
-//     });
+ 	/* Form 2 */
+	jQuery('#propertyDetailForm').bind('submit', function() {
+		jQuery(this).ajaxSubmit({ success: contactForm });
+		// return false to prevent normal browser submit and page navigation
+        return false;
+    });
+
+	/* Form 3 */
+	jQuery('#propertyDetailForm').bind('submit', function() {
+		jQuery(this).ajaxSubmit({ success: ImageForm });
+		// return false to prevent normal browser submit and page navigation
+        return false;
+    });
 
 	function detailForm() {
     	jQuery("#tabs").tabs('select',1);
 	}
 
-// 	function contactForm() {
-//     	jQuery("#tabs").tabs('select',2);
-// 	}
-//
-// 	function imageForm() {
-//     	jQuery("#tabs").tabs('select',3);
-// 	}
+	function contactForm() {
+    	jQuery("#tabs").tabs('select',2);
+	}
+
+	function imageForm() {
+    	jQuery("#tabs").tabs('select',3);
+	}
 
 	jQuery("#tabs").tabs({
 			cache: false,

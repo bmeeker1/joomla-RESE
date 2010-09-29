@@ -23,7 +23,8 @@ class PropertyViewXtrafeatures extends JView
 	*/
 	function display($tpl = null)
 	{
-		$property_detail_id = JRequest::getVar('pdid', NULL, 'GET');
+		echo $_SESSION['prop_id'];
+		$property_id = JRequest::getVar('pdid', NULL, 'GET');
      	$title_text = empty($property_detail_id)? JText::_( 'Add' ) : JText::_( 'Update' );
  		JToolBarHelper::title( JText::_(" $title_text Property Details" ), 'user.png');
 // 		JToolBarHelper::save();
@@ -54,6 +55,7 @@ class PropertyViewXtrafeatures extends JView
 		$this->assignRef('property_detail_id',$property_detail_id);
 		$this->assignRef('title_text',$title_text);
 		$this->assignRef('condition_list', $condition_list);
+		$this->assignRef('property_id',$_SESSION['prop_id']);
 // 		$this->assignRef('district_list', $district_list);
 // 		$this->assignRef('city_list', $city_list);
 // 		$this->assignRef('detail_data', $detail_data);

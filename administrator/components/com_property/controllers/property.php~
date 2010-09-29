@@ -49,7 +49,6 @@ class PropertyControllerProperty extends PropertyController
 		list($result,$insert_id)=$propertyModel->save();
 		unset($_SESSION['prop_id']);
 		$_SESSION['prop_id'] = $insert_id;
-		return $result;
 // 		var_dump($result);
 // 		var_dump($insert_id);
 // 		die();

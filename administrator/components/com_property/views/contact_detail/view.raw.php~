@@ -40,7 +40,6 @@ class PropertyViewContact_detail extends JView
 		}
 
 		//Assigning variable to view object so that it can be retrieve in default.php
-		$this->assignRef('property_id',$_SESSION['prop_id']);
 		$this->assignRef('property_contact_id',$property_contact_id);
 		$this->assignRef('title_text',$title_text);
 		//$this->assignRef('contact_data', $contact_data);
