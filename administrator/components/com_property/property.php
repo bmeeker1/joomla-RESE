@@ -1,4 +1,5 @@
 <?php
+session_start();
 // ini_set('display_errors','On');
 // error_reporting(E_ALL);
 
@@ -45,6 +46,17 @@ $controller = new $classname();
 
 //Perform the requested task
 $controller->execute(JRequest::getVar('task'));
+
+if (isset($_REQUEST["debug"])) {
+	if ($_REQUEST["debug"] == "on") $_SESSION["debug"] = true;
+	if ($_REQUEST["debug"] == "off") $_SESSION["debug"] = false;
+}
+
+function debug_Log($message) {
+	if ($_REQUEST["debug"]) {
+	echo "<br>Debug: ".$message."<br>";
+	}
+}
 
 //Redirect if set by controller
 $controller->redirect();

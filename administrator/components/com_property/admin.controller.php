@@ -35,8 +35,5 @@ class PropertyController extends JController
 		$statement = "<br/>This is <b>".__CLASS__."</b> Class.<br/>Defined in <i>".__FILE__."</i>";
 		return $statement;
  	}
-
-
-
 }
 ?>
