@@ -233,6 +233,7 @@
 			if(isArea(this.value)) jQuery(this).removeClass('wrong'); else jQuery(this).addClass('wrong');
 			return isArea(this.value);
 		});
+
 		// following code is to validate all inpt field together in distance table using `delagate` method
 		jQuery('table#distanceTable').delegate('td input','change', function () {
 			if(isArea(this.value)) jQuery(this).removeClass('wrong'); else jQuery(this).addClass('wrong');

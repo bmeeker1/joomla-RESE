@@ -4,21 +4,7 @@ jQuery(function () {
 	jQuery("#property_description").cleditor();
     jQuery("#contact_number").mask("(999) 999-9999");
     jQuery("#zip").mask("9999999");
-	jQuery("#tabs").tabs({
-			cache: false,
-			disabled: [4],
-			spinner: 'Retrieving data...' ,
-			ajaxOptions: {
-				error: function(xhr, status, index, anchor) {
-					jQuery(anchor.hash).html("<p style='padding:10px'>This Tab is Under Construction</p>");
-				}
-			}
-      }).bind('tabsload', function(event, ui) {
-
-		jQuery("#contact_number").mask("(999) 999-9999");
-	});
-
-    var validator = jQuery("#addPropertyForm").validate({
+	var validator = jQuery("#addPropertyForm").validate({
 		debug:true,
         rules: {
             propTitle: {
@@ -60,6 +46,62 @@ jQuery(function () {
 			return false;
    		}
     });
+
+	/* var validator = jQuery("#propertyDetailForm").validate({
+        rules: {
+            cover_area: {
+                required: true,
+				digit:true
+            }
+        },
+        messages: {
+            cover_area: {
+                required: "Please write Covered area",
+                digits: "Only numbers",
+            }
+        },
+		submitHandler: function(form) {
+			jQuery(form).ajaxSubmit();
+			jQuery("#tabs").tabs( 'select',2);
+			jQuery(form).resetForm();
+			return false;
+   		}
+    });*/
+
+	jQuery("#tabs").tabs({
+// 			select: function(event, ui) {
+// 				currentTabIndex = jQuery('#tabs').tabs('option', 'selected');
+// // 				if (currentTabIndex == 0) {
+// // 					var isValid = jQuery("#addPropertyForm").valid();
+// // 						if(!isValid) alert('Please fill Basic details');
+// // 						return isValid;
+// // 				}
+// 			},
+// 			fx: { opacity: "toggle" },
+			cache: false,
+			spinner: 'Retrieving data...' ,
+			ajaxOptions: {
+				error: function(xhr, status, index, anchor) {
+					jQuery(anchor.hash).html("<p style='padding:10px'>This Tab is Under Construction</p>");
+				}
+			}
+      }).bind('tabsload', function(event, ui) {
+	 if(ui.index == 2 )
+		{
+			jQuery("#contact_number").mask("(999) 999-9999");
+			jQuery("#alt_number").mask("(999) 999-9999");
+		}
+	});
+	jQuery("#tabs").bind( "tabsselect", function(event, ui) {
+		selecTabIndex = jQuery('#tabs').tabs('option', 'selected');
+// 		console.log(ui.index+':'+selecTabIndex);
+				if (selecTabIndex == 0) {
+					var isValid = jQuery("#addPropertyForm").valid();
+						if(!isValid) alert('Please fill Basic details');
+						return isValid;
+				}
+			});
+
 
 	jQuery('#clear').click ( function () {
 		validator.resetForm();

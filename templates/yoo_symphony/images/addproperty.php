@@ -168,6 +168,23 @@ class PropertyModelAddproperty extends JModel
 	}
 
 
+	function fix_files_superglobal()
+	{
+		function rearrange($group)
+			{
+				foreach($group as $property => $arr)
+				{
+					foreach($arr as $item => $value)
+					{
+						$result[$item][$property] = $value;
+					}
+				}
+			return $result;
+			}
+    	$_FILES = array_map('rearrange', $_FILES);
+	}
+
+
 	/**
 	* function to store ( Insert or Update )  all images of a property into databse as well as their thumbs also
 	* @access public
@@ -180,20 +197,17 @@ class PropertyModelAddproperty extends JModel
 		{
 			$post_data = JRequest::get('POST');
 			JRequest::watch($post_data);
+			//JRequest::watch($_FILES);
+			//JRequest::watch($_FILES['property_image'],1,0);
+			$this->fix_files_superglobal();
 			JRequest::watch($_FILES);
-			JRequest::watch($_FILES['property_image'],1,0);
 			//Insert all images related to the ad
-			foreach ($_FILES['property_image'] as $key => &$value) { echo "<br/>Err:".$key['error']; }
-			die;
 			foreach ($_FILES['property_image'] as $key => &$value)
 			{
-				echo "<br/>".__LINE__." Inside image foreach";
 				if ( ($value['error'] == 0) && ($value['size'] > 0) )
 				{
-					echo "<br/>".__LINE__." Inside if";
-					echo $value; die;
 					$imageResized = $this->imageResize($value);
-					JRequest::watch($imageResized,1,1);
+					JRequest::watch($imageResized,1,0);
 					//Delete data from the database if edit property and status is 'pending for approval'
 					if ($post_data['image_id'] && $postdata['property_id'] )
 					{
@@ -235,25 +249,23 @@ class PropertyModelAddproperty extends JModel
 					$image_query .= " #__property_image SET
 															property_id=%d,
 															image_title='%s',
-															image_path='%s',";
+															image_path='%s',
+															thumb_path ='%s',
+															image_size =%d,
+															image_type= '%s',";
 					$image_query .= (intval($_POST['property_id']) !== 0) ? " updated_by=%d WHERE image_id=%d "
 					        									  		  : " added_by=%d,added_date=NOW() ";
-					$image_detail = array ($post_data['property_id'], $post_data['image_title'], $imageResized['image_path'], $this->user->id,
-										   $post_data['image_id'] );
-					print vsprintf( $image_query,$image_detail ) ; jexit();
-					//$this->db->setQuery(vsprintf($sql,$detail_value));
-					//return $this->db->query();
-
-					//$thumb_image_info = $this->image_get_info(JPATH_SITE . DS . $imageResized['thumb_path']);
-					//$thumb_image_info['title'] = $key.' thumb';
-					//jRequest::watch($thumb_image_info,0,__LINE__,1);
-					// insert original image's thumb information into table_image and table_imagead simultaneously
-					//$this->insertImageData($image_query,$thumb_image_info, $ad_id,'ad');
+					$image_detail = array ($post_data['property_id'], $post_data['image_title'][$key], $imageResized['image_path'],
+					$imageResized['thumb_path'], $value['size'], $value['type'],$this->user->id, $post_data['image_id']);
+					print vsprintf( $image_query,$image_detail ) ;
+					$this->db->setQuery(vsprintf($image_query,$image_detail));
+					$this->db->query();
 				}
 			}
+				return true;
 		}
 		catch(Exception $e){
-				//who cares!
+				return 0;
 		}
 
 	}
@@ -261,19 +273,26 @@ class PropertyModelAddproperty extends JModel
 	/**
 	* Function to save origianl image and thumbail image on destination folder
 	* @code keshav mohta
+	* return array containing image title,path of original image,  path of thumb image .
 	*/
 	public function imageResize($image)
 	{
 		try
 		{
-			$dim = array();
-			//Making filename unique by appending timestamp
-			$image_original_name = $image['name'];
-  			$imageinfo = pathinfo($image_original_name);
-			//image name changed to image_timestamp
-			$image_rename =  basename($image_original_name,".".$imageinfo['extension'])."_".time().'.'. $imageinfo['extension'];
-			// spaces are changed to '_' and this is the final name of image
-			$image_title = preg_replace('/\s+/','_', $image_rename);
+			$dimension = array();
+			$paths =array();
+			//Modifying filename  and make unique by appending timestamp
+			$old_title = $image['name']; var_dump($old_title);
+  			$imageinfo = pathinfo($old_title);
+ 			JRequest::watch($imageinfo);
+			$rename = preg_replace('/\W/',' ', $imageinfo['filename']); // all Non word (\W === [^0-9a-zA-z_] ) character changed into ' '
+			var_dump($rename);
+			$rename = trim($rename); var_dump($rename);
+			$rename = strtolower($rename); 	var_dump($rename);
+			$rename=substr($rename,0,200);	var_dump($rename);
+			$rename = preg_replace('/\s+/','-', $rename); 	//var_dump($rename); // now all spaces are changed into '-'
+			$new_title= $rename."_".time().".".$imageinfo['extension']; // finally append timestamp in filename and add extension
+			var_dump($new_title);
 			//Fetch width and height from the _config table
 			$query = 'SELECT
 							max_thumb_width AS width,
@@ -284,19 +303,20 @@ class PropertyModelAddproperty extends JModel
 			$this->db->setQuery($query);
 
 			// Store image standards in dimenstion array
-			$dim = $this->db->loadAssoc();
-			$thumb_height = $dim['height'] ? $dim['height'] : 150;
-			$thumb_width = $dim['width'] ? $dim['width'] : 100;
+			$dimension = $this->db->loadAssoc();
+			$thumb_height = $dimension['height'] ? $dimension['height'] : 150;
+			$thumb_width = $dimension['width'] ? $dimension['width'] : 100;
 			$allowed_types = array( 'image/pjpeg','image/gif','image/png','image/jpeg');
 
 			if ( in_array($image['type'], $allowed_types ) )
 			{
-				if (!copy($image['tmp_name'], JPATH_SITE . DS . $dim['path'] . $image_title)) {
+				if (!copy($image['tmp_name'], JPATH_SITE . DS . $dimension['path'] . $new_title))
+				{
  				    die("failed to copy" .  $image['tmp_name'] . "...\n");
 				}
 
 				//name of saved image width full path
-				$image_save = JPATH_SITE . DS .$dim['path'] . $image_title;
+				$image_save = JPATH_SITE . DS .$dimension['path'] . $new_title;
 				//get the height & width of original image saved
 				list($width, $height) = getimagesize($image_save);
 				//let's create thumb image
@@ -311,28 +331,27 @@ class PropertyModelAddproperty extends JModel
 											$tmpimage = imagecreatefrompng($image_save);
 											// $thumb_image is now developed as a 150*100 width image
 											imagecopyresampled($thumb_image, $tmpimage, 0, 0, 0, 0, $thumb_width, $thumb_height, $width, $height);
-											$thumbname = $image_title;
+											$thumbname = $new_title;
 											//filename remain same but path of thumbnail is different
-											$location = JPATH_SITE . DS . $dim['thumb_path'] . $thumbname;
+											$location = JPATH_SITE . DS . $dimension['thumb_path'] . $thumbname;
 											// Save the image
 											imagepng($thumb_image,$location,0,100); // NOTE=>4 arguments
 											// free up the memory
 											imagedestroy($thumb_image);
 											break;
-					// gif is not allowed right now
 						case "image/gif" :
 											$tmpimage = imagecreatefromgif($image_save);
 											imagecopyresampled($thumb_image, $tmpimage, 0, 0, 0, 0, $thumb_width, $thumb_height, $width, $height);
-											$thumbname = $image_title;
-											$location = JPATH_SITE . DS . $dim['thumb_path'] . $thumbname;
+											$thumbname = $new_title;
+											$location = JPATH_SITE . DS . $dimension['thumb_path'] . $thumbname;
 											imagegif($thumb_image, $location);// NOTE=>2 arguments
 											imagedestroy($thumb_image);
 											break;
 						case ($image['type']=="image/jpeg" || $image['type']=="image/pjpeg"):
 											$tmpimage = imagecreatefromjpeg($image_save);
 											imagecopyresampled($thumb_image, $tmpimage, 0, 0, 0, 0, $thumb_width, $thumb_height, $width, $height);
-											$thumbname = $image_title;
-											$location = JPATH_SITE . DS . $dim['thumb_path'] . $thumbname;
+											$thumbname = $new_title;
+											$location = JPATH_SITE . DS . $dimension['thumb_path'] . $thumbname;
 											imagejpeg($thumb_image,$location,100); //NOTE=>3 arguments
 											imagedestroy($thumb_image);
 											break;
@@ -340,20 +359,17 @@ class PropertyModelAddproperty extends JModel
 											imagedestroy($thumb_image);
 											break;
 						}
-				$paths['image_title'] = $image_title;
-				$paths['image_path']  = $dim['path'] . $image_title;
-				$paths['thumb_path']  = $dim['thumb_path'] . $image_title;
-				return $paths;
+				$paths['image_name'] = $new_title;
+				$paths['image_path']  = $dimension['path'] . $new_title;
+				$paths['thumb_path']  = $dimension['thumb_path'] . $new_title;
 			}
+			return $paths;
 		}
 		catch (Exception $e)
 		{
 			return 0;
 		}
 	}
-
-
-
 
 }
 ?>
