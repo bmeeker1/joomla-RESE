@@ -2,6 +2,8 @@ jQuery.noConflict();
 jQuery.metadata.setType("attr", "validate");
 jQuery(function () {
 	jQuery("#property_description").cleditor();
+	jQuery.validator.addMethod(
+				'is_real',function (value,element) { return this.optional(element)  || /^\d*\.?\d*$/i.test(value); },'Invalid input!' );
 	var validator = jQuery("#addPropertyForm").validate({
 		debug:true,
         rules: {
@@ -18,7 +20,8 @@ jQuery(function () {
 				maxlength: 7
             },
             price: {
-                required: true
+                required: true,
+				is_real : true,
             }
         },
         messages: {
@@ -34,43 +37,44 @@ jQuery(function () {
 				maxlength : "maximum 7 digits"
             },
             price: {
-                required: "Please mention Price"
+                required: "Please write Price",
+				is_real:"Enter only amonut"
             }
         }
     });
 
 	 /* Form 1 */
     jQuery('#addPropertyForm').bind('submit', function() {
-       jQuery(this).ajaxSubmit({ success:  detailForm });
+         jQuery(this).ajaxSubmit({ success:  detailForm });
 		// return false to prevent normal browser submit and page navigation
         return false;
     });
 
- 	/* Form 2 */
-	jQuery('#propertyDetailForm').bind('submit', function() {
-		jQuery(this).ajaxSubmit({ success: contactForm });
-		// return false to prevent normal browser submit and page navigation
-        return false;
-    });
-
-	/* Form 3 */
-	jQuery('#propertyDetailForm').bind('submit', function() {
-		jQuery(this).ajaxSubmit({ success: ImageForm });
-		// return false to prevent normal browser submit and page navigation
-        return false;
-    });
+//  	/* Form 2 */
+// 	jQuery('#propertyDetailForm').bind('submit', function() {
+// 		jQuery(this).ajaxSubmit({ success: contactForm });
+// 		// return false to prevent normal browser submit and page navigation
+//         return false;
+//     });
+//
+// 	/* Form 3 */
+// 	jQuery('#propertyDetailForm').bind('submit', function() {
+// 		jQuery(this).ajaxSubmit({ success: ImageForm });
+// 		// return false to prevent normal browser submit and page navigation
+//         return false;
+//     });
 
 	function detailForm() {
     	jQuery("#tabs").tabs('select',1);
 	}
 
-	function contactForm() {
-    	jQuery("#tabs").tabs('select',2);
-	}
-
-	function imageForm() {
-    	jQuery("#tabs").tabs('select',3);
-	}
+// 	function contactForm() {
+//     	jQuery("#tabs").tabs('select',2);
+// 	}
+//
+// 	function imageForm() {
+//     	jQuery("#tabs").tabs('select',3);
+// 	}
 
 	jQuery("#tabs").tabs({
 			cache: false,

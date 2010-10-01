@@ -68,7 +68,7 @@
 		<input type='hidden' value='com_property' name='option' />
 		<input type='hidden' value='property' name='controller' />
 		<input type='hidden' value='storeContact' name='task' />
-		<input type='hidden' value='<?php echo $this->property_id; ?>' name='property_id' />
+		<input type='hidden' value='<?php echo $this->property_id;?>' name='property_id' />
 		<input type='hidden' value='<?php echo $this->property_contact_id; ?>' name='property_contact_id' />
 		<input type="hidden" value="1" name="<?php echo JUtility::getToken(); ?>"  />
 </form>
@@ -78,13 +78,31 @@
 		var validator = jQuery("#propertyContactForm").validate({
 			debug:true,
 			rules: {
+				contact_office: {
+					required: true,
+				},
+				contact_number: {
+					required: true,
+				},
 				contact_person: {
+					required: true,
+				},
+				contact_address: {
 					required: true,
 				}
 			},
 			messages: {
+				contact_office: {
+					required: "Pleaae write office name"
+				},
+				contact_number: {
+					required: "Please write contact number"
+				},
 				contact_person: {
-					required: "Please write Name"
+					required: "Please write name"
+				},
+				contact_address: {
+					required: "Please write contact address"
 				}
 			},
 			submitHandler: function(form) {

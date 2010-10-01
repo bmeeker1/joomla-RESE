@@ -14,7 +14,7 @@
 // 	$document->addScript($editor_js);
 ?>
 <fieldset >
-	<form name="propertyDetailForm" id="propertyDetailForm" action="" method="POST">
+	<form name="propertyDetailForm" id="propertyDetailForm" action="index.php" method="POST">
 		<label style="margin:3px;font:bold 14px verdna;color:#5F6F7F">Specifications</label>
 		<table border="0" width="100%" cellpadding="5" cellspacing="5" style="border-bottom:1px dotted #7F6F6F;">
 			<tr>
@@ -148,7 +148,7 @@
 			<tr>
 				<td width="20%" align="right" valign="top"><label for="p_cond">Property Condition:</label></td>
 				<td width="80%" align="left" valign="top">
-					<select id="p_cond" name="p_cond">
+					<select id="p_cond" name="p_cond" title="Please select property condition" validate="required:true" >
 						<option value="">-Select-</option>
 					<?php foreach ($this->condition_list as $k=>$v) { ?>
 						<option value="<?php echo $v['condition_id']; ?>" ><?php echo $v['condition_name'];?></option>
@@ -218,14 +218,58 @@
 				var rx=/^\d*\.?\d*$/;
 				return rx.test(val);
 		};
+
+
 	jQuery(document).ready(function() {
 		jQuery("#more_detail").cleditor();
 
-		jQuery('#propertyDetailForm').bind('submit', function() {
-		jQuery(this).ajaxSubmit({ success:  contactForm });
-			// return false to prevent normal browser submit and page navigation
-       	 	return false;
-   		});
+// 		jQuery.validator.addMethod(
+// 				'is_area',function (value,element) { return this.optional(element)  || /^\d*\.?\d*$/i.test(value); },'Invalid area!' );
+
+		var validator = jQuery("#propertyDetailForm").validate({
+			debug:true,
+			rules: {
+				cover_area: {
+					required: true,
+					is_real :true
+				},
+				cover_veranda: {
+					is_real :true
+				},
+				sea_d: {
+					is_real :true
+				},
+				air_d: {
+					is_real :true
+				},
+				stn_d: {
+					is_real :true
+				},
+				hiw_d: {
+					is_real :true
+				}
+
+			},
+			messages: {
+				cover_area: {
+					required: "Pleaae write covered area",
+				}
+			},
+			submitHandler: function(form) {
+					// do other stuff for a valid form
+					jQuery(this).ajaxSubmit({ success:  contactForm });
+					// return false to prevent normal browser submit and page navigation
+					return false;
+   			}
+ 		});
+// 		jQuery('#propertyDetailForm').bind('submit', function() {
+// 		jQuery(this).ajaxSubmit({ success:  contactForm });
+// 			// return false to prevent normal browser submit and page navigation
+//        	 	return false;
+//    		});
+
+// 	jQuery("#cover_area").rules("add", { regex: "/^\d*\.?\d*$/" })
+
 
 		jQuery('#cover_area, #cover_veranda').live('change',function() {
 			if(isArea(this.value)) jQuery(this).removeClass('wrong'); else jQuery(this).addClass('wrong');

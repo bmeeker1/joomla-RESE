@@ -102,7 +102,7 @@ class PropertyModelAddproperty extends JModel
 			$post_data['detail'] = JRequest::getVar('more_detail', '', 'POST', 'string', JREQUEST_ALLOWRAW);
 			//JRequest::watch($post_data,1,0);
 			$sql  = (intval($post_data['property_detail_id']) !== 0) ? "UPDATE " : "INSERT INTO ";
-			$sql .= " #__property_detail SET
+			$sql .= " #__pwroperty_detail SET
 												property_id=%d,
 												total_bedroom=%d,
 												total_bathroom=%d,
@@ -126,7 +126,7 @@ class PropertyModelAddproperty extends JModel
             $post_data['cover_area'], $post_data['cover_veranda'], $post_data['swiming_pool'], $post_data['lift'], $post_data['parking_type'],
 			$post_data['p_cond'], addslashes($post_data['detail']), $post_data['built_year'], addslashes($post_data['video_link']), $post_data['sea_d'],
 			$post_data['air_d'], $post_data['stn_d'], $post_data['hiw_d'],$this->user->id, $post_data['property_detail_id'] );
- 			//print vsprintf( $sql,$detail_value ) ; jexit();
+ 			print vsprintf( $sql,$detail_value ) ; die();
 			$this->db->setQuery(vsprintf($sql,$detail_value));
 			return $this->db->query();
 		}

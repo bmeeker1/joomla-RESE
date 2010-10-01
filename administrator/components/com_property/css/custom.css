@@ -7,7 +7,7 @@ a:hover { text-decoration: none; }
 img { border:0; }
 .rdb{border:1px solid red;}
 sup { clear:both; color:red;}
-.wrong { background-color:yellow; border:2px solid red; }
+.wrong { background-color:yellow; border:3px solid red; }
 fieldset {
 	border:1px solid #A4AFAF;
 	width:85%

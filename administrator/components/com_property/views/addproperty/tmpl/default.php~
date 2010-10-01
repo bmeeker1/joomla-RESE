@@ -25,13 +25,13 @@
 	$widget_js = $siteURL."components/com_property/js/jquery.ui.widget.js";
 	$tab_js = $siteURL."components/com_property/js/jquery.ui.tabs.js";
 
-// 	$document->addScript($validate_js);
-// 	$document->addScript($metadata_js);
-// 	$document->addScript($mask_js);
-// 	$document->addScript($property_js);
-// 	$document->addScript($editor_js);
-// 	$document->addScript($form_js);
-// 	$document->addScript($widget_js);
+	$document->addScript($validate_js);
+	$document->addScript($metadata_js);
+	$document->addScript($mask_js);
+	$document->addScript($property_js);
+	$document->addScript($editor_js);
+	$document->addScript($form_js);
+	$document->addScript($widget_js);
 // 	$document->addScript($tab_js);
 
 ?>

@@ -78,13 +78,31 @@
 		var validator = jQuery("#propertyContactForm").validate({
 			debug:true,
 			rules: {
+				contact_office: {
+					required: true,
+				},
+				contact_number: {
+					required: true,
+				},
 				contact_person: {
+					required: true,
+				},
+				contact_address: {
 					required: true,
 				}
 			},
 			messages: {
+				contact_office: {
+					required: "Pleaae write office name"
+				},
+				contact_number: {
+					required: "Please write contact number"
+				},
 				contact_person: {
-					required: "Please write Name"
+					required: "Please write name of contact person"
+				},
+				contact_address: {
+					required: "Please write contact address"
 				}
 			},
 			submitHandler: function(form) {

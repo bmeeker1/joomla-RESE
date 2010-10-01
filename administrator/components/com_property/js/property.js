@@ -2,6 +2,8 @@ jQuery.noConflict();
 jQuery.metadata.setType("attr", "validate");
 jQuery(function () {
 	jQuery("#property_description").cleditor();
+	jQuery.validator.addMethod(
+				'is_real',function (value,element) { return this.optional(element)  || /^\d*\.?\d*$/i.test(value); },'Invalid input!' );
 	var validator = jQuery("#addPropertyForm").validate({
 		debug:true,
         rules: {
@@ -18,7 +20,8 @@ jQuery(function () {
 				maxlength: 7
             },
             price: {
-                required: true
+                required: true,
+				is_real : true,
             }
         },
         messages: {
@@ -34,14 +37,15 @@ jQuery(function () {
 				maxlength : "maximum 7 digits"
             },
             price: {
-                required: "Please mention Price"
+                required: "Please write Price",
+				is_real:"Enter only amonut"
             }
         }
     });
 
 	 /* Form 1 */
     jQuery('#addPropertyForm').bind('submit', function() {
-       jQuery(this).ajaxSubmit({ success:  detailForm });
+         jQuery(this).ajaxSubmit({ success:  detailForm });
 		// return false to prevent normal browser submit and page navigation
         return false;
     });
@@ -78,11 +82,11 @@ jQuery(function () {
     }).bind( "tabsselect tabsload", function(event, ui) {
 		selecTabIndex = jQuery('#tabs').tabs('option', 'selected');
 // 		console.log(ui.index+':'+selecTabIndex);
-				if (selecTabIndex == 0) {
-					var isValid = jQuery("#addPropertyForm").valid();
-						if(!isValid) alert('Please fill Basic details');
-						return isValid;
-				}
+// 				if (selecTabIndex == 0) {
+// 					var isValid = jQuery("#addPropertyForm").valid();
+// 						if(!isValid) alert('Please fill Basic details');
+// 						return isValid;
+// 				}
 				if(ui.index == 2)
 				{
 					jQuery("#contact_number").mask("(999) 999-9999");
