@@ -92,21 +92,37 @@ class PropertyModelProperty extends JModel
 
 
 	/**
-	* Function to retrive detaild features information of a property of given property detail id or property id
+	* Function to retrive detaild features information of a property of given property id
 	* @access public
 	* @code keshav mohta
 	* @param int pid property id
-	* @param int pdid property detail id
 	* @return Associative single array containing complete property details
 	*/
 
-	public function getPropertyMoreDetail ($pdid = null,$pid=null)
+	public function getPropertyMoreDetail ($pid=null)
 	{
-		$sql= "SELECT * FROM #__property_detail WHERE property_detail_id=".mysql_real_escape_string($pdid) ;
+		$sql= "SELECT * FROM #__property_detail WHERE property_id=".mysql_real_escape_string($pid) ;
 		$this->db->setQuery($sql);
 		$arr_moreDetail=$this->db->loadAssoc(); // see the function here
 		return $arr_moreDetail;
 	}
+
+	/**
+	* Function to retrive contact details of a property of given property id
+	* @access public
+	* @code keshav mohta
+	* @param int pid property id
+	* @return Associative single array containing complete property details
+	*/
+
+	public function getPropertyContactDetail($pid=null)
+	{
+		$sql= "SELECT * FROM #__property_contact WHERE property_id=".mysql_real_escape_string($pid) ;
+		$this->db->setQuery($sql);
+		$arr_contactDetail=$this->db->loadAssoc(); // see the function here
+		return $arr_contactDetail;
+	}
+
 
 	/**
 	* Function to retrive all type of a property

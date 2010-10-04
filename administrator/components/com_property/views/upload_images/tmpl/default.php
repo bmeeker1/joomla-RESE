@@ -1,7 +1,10 @@
-<?php defined('_JEXEC') or die('Restricted access');?>
-<style type="text/css">
-.imageTable {  padding:3px 0 8px 0; border-bottom:1px solid #535F58; }
-</style>
+<?php
+	defined('_JEXEC') or die('Restricted access');
+?>
+<!--<link rel="stylesheet" href="components/com_property/css/custom.css" type="text/css" >
+<script type="text/javascript" src="components/com_property/js/jquery.min.js"></script>
+<script type="text/javascript" src="components/com_property/js/jquery.validate.js"></script>
+<script type="text/javascript" src="components/com_property/js/jquery.form.js"></script>-->
 <fieldset >
 <form name="imageUploadForm" id="imageUploadForm" action="" method="POST" enctype="multipart/form-data" >
 	<label style="margin:3px;font:bold 14px verdna;color:#5F6F7F">Upload Images</label>
@@ -36,7 +39,7 @@
 			<td align="right">
 				<input type="submit" value="Upload" name="upload" class="submit" id="upload" />
 				<?php if(!empty($this->property_id)) { ?>
-				<input type="button" name="Back" onclick="javascript:history.go(-1)" value="Back" />
+				<input type="button" name="Back" onclick="javascript:history.go(-1)" value="Back" class="submit" />
 				<?php } else { ?>
 				<input type="reset"  value="Clear" name="Clear" class="submit" />
 				<?php } ?>
@@ -47,10 +50,9 @@
 		<input type='hidden' value='com_property' name='option' />
 		<input type='hidden' value='property' name='controller' />
 		<input type='hidden' value='StorePropertyImages' name='task' />
-		<input type='hidden' value='<?php echo $this->property_id; ?>' name='property_id' />
-		<input type="hidden" name="<?php echo JUtility::getToken(); ?>" value="1" />
+		<input type='hidden' value='<?php echo $this->property_id;?>' name='property_id' />
+		<input type="hidden" name="<?php echo JUtility::getToken();?>" value="1" />
 </form>
-
 </fieldset>
 <script type="text/javascript">
 jQuery(document).ready(function () {

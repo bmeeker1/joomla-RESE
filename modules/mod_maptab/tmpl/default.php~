@@ -1,9 +1,0 @@
-<?php // no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
-<div class="lfttop">
-	<ul class="toplist reset">
-		<li class="active"><a href="#" class="real">Real Estate</a></li>
-		<li><a href="#" class="offc">Office Associates</a></li>
-	</ul>
-	<div class="imgdiv"><img src="templates/yoo_symphony/images/mapimg.png" alt="image" /></div>
-</div>

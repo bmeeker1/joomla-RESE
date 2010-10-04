@@ -24,26 +24,24 @@ class PropertyViewContact_detail extends JView
 	function display($tpl = null)
 	{
 
-		$property_contact_id = JRequest::getVar('pcid', NULL, 'GET');
-    	$title_text = empty($property_contact_id)? JText::_( 'Add' ) : JText::_( 'Update' );
+		$property_id=$_SESSION['prop_id'];
+    	$title_text = empty($property_id)? JText::_( 'Add' ) : JText::_( 'Update' );
 		JToolBarHelper::title( JText::_(" $title_text Contact Detail" ), 'user.png');
 		//controller & model intialization
 		$base_controller = new PropertyController();
 		$base_model=$base_controller->getModel('Property');
 		$model =& $this->getModel();
-		if(!empty($property_contact_id) )
+		if(!empty($property_id) )
 		{
-			//$contact_data=$base_model->getPropertyContactDetail($property_contact_id);
-			//$district_list=$base_model->getDistrictList($prop_data['property_province_id']);
-			//$city_list=$base_model->getCityList($prop_data['property_district_id']);
-			//JRequest::watch($contact_data);
+  			 $contact_data=$base_model->getPropertyContactDetail($property_id);
+			 JRequest::watch($contact_data);
 		}
 
 		//Assigning variable to view object so that it can be retrieve in default.php
-		$this->assignRef('property_id',$_SESSION['prop_id']);
-		$this->assignRef('property_contact_id',$property_contact_id);
+		$this->assignRef('property_id',$property_id);
+		$this->assignRef('contact_id',$contact_data['contact_id']);
 		$this->assignRef('title_text',$title_text);
-		//$this->assignRef('contact_data', $contact_data);
+		$this->assignRef('contact_data', $contact_data);
 
 		parent::display($tpl);
     }

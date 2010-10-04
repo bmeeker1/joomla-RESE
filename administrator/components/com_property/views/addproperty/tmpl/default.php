@@ -165,22 +165,23 @@
 					</td>
 				</tr>
 				<tr>
-					<td >&nbsp;</td>
+					<td>
+						<input type='hidden' value='com_property' name='option' />
+						<input type='hidden' value='property' name='controller' />
+						<input type='hidden' value='storeProperty' name='task' />
+						<input type='hidden' value='<?php echo $this->property_id; ?>' name='property_id' />
+						<input type="hidden" name="<?php echo JUtility::getToken(); ?>" value="1" />
+					</td>
 					<td align="left">
 						<input type="submit" value="<?php echo $this->title_text; ?>" name="doAction" class="submit"  />
 						<?php if(!empty($this->property_id)) { ?>
-						<input type="button" name="Back" onclick="javascript:history.go(-1)" value="Back" />
+						<input type="button" name="Back" onclick="javascript:history.go(-1)" value="Back" class="submit"/>
 						<?php } else { ?>
 						<input type="reset"  value="Clear" name="Clear" class="submit" id="clear"/>
 						<?php } ?>
 					</td>
 				</tr>
 			</table>
-			<input type='hidden' value='com_property' name='option' />
-			<input type='hidden' value='property' name='controller' />
-			<input type='hidden' value='storeProperty' name='task' />
-			<input type='hidden' value='<?php echo $this->property_id; ?>' name='property_id' />
-			<input type="hidden" name="<?php echo JUtility::getToken(); ?>" value="1" />
 		</form>
 	</fieldset>
 	</div> <!--end of tab 1-->

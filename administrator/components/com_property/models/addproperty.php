@@ -61,7 +61,7 @@ class PropertyModelAddproperty extends JModel
 												property_city_id=%d,
 												property_address_line1='%s',
 												property_address_line2='%s',
-												property_zip=%d,
+												property_zip='%s',
 												property_price='%s',
 												property_description='%s',";
 			$sql .= (intval($post_data['property_id']) !== 0) ? " property_updated_by=%d WHERE property_id=%d "
@@ -70,7 +70,7 @@ class PropertyModelAddproperty extends JModel
 			$post_data['prop_province_id'], $post_data['prop_district_id'], $post_data['prop_city_id'], addslashes($post_data['address1']),
 			addslashes($post_data['address2']), $post_data['zip'], $post_data['price'], $post_data['description'],$this->user->id,
 			$post_data['property_id'] );
-			//print vsprintf( $sql,$property_value ) ;
+			print vsprintf( $sql,$property_value ) ;
 			$this->db->setQuery(vsprintf($sql,$property_value));
 			$this->db->query();
 			if($this->db->getAffectedRows())
@@ -101,8 +101,8 @@ class PropertyModelAddproperty extends JModel
 			// here DESCRIPRION  field should be same as user write using tinymce
 			$post_data['detail'] = JRequest::getVar('more_detail', '', 'POST', 'string', JREQUEST_ALLOWRAW);
 			//JRequest::watch($post_data,1,0);
-			$sql  = (intval($post_data['property_detail_id']) !== 0) ? "UPDATE " : "INSERT INTO ";
-			$sql .= " #__pwroperty_detail SET
+			$sql  = (intval($post_data['detail_id']) !== 0) ? "UPDATE " : "INSERT INTO ";
+			$sql .= " #__property_detail SET
 												property_id=%d,
 												total_bedroom=%d,
 												total_bathroom=%d,
@@ -110,23 +110,23 @@ class PropertyModelAddproperty extends JModel
 												total_covered_area=%01.3f,
 												total_covered_veranda=%01.3f,
 												swiming_pool='%s',
-												lift_available='%s',
-												parking_type='%s',
 												property_condition_id=%d,
 												property_full_description='%s',
-												built_year=%d,
+												built_year='%s',
 												video_link='%s',
 												sea_distance=%01.2f,
 												airport_distance=%01.2f,
 												railway_distance=%01.2f,
 												highway_distance=%01.2f, ";
-			$sql .= (intval($post_data['property_detail_id']) !== 0) ? " updated_by=%d WHERE property_detail_id=%d "
-															         : " added_by=%d,added_date=NOW() ";
+			$sql .= (intval($post_data['detail_id']) !== 0) ? " updated_by=%d WHERE property_detail_id=%d "
+															: " added_by=%d,added_date=NOW() ";
 			$detail_value = array ( $post_data['property_id'], $post_data['bedroom'], $post_data['bathroom'], $post_data['kitchen'],
-            $post_data['cover_area'], $post_data['cover_veranda'], $post_data['swiming_pool'], $post_data['lift'], $post_data['parking_type'],
-			$post_data['p_cond'], addslashes($post_data['detail']), $post_data['built_year'], addslashes($post_data['video_link']), $post_data['sea_d'],
-			$post_data['air_d'], $post_data['stn_d'], $post_data['hiw_d'],$this->user->id, $post_data['property_detail_id'] );
- 			print vsprintf( $sql,$detail_value ) ; die();
+            $post_data['cover_area'], $post_data['cover_veranda'], $post_data['swiming_pool'], $post_data['p_cond'], addslashes($post_data['detail']),
+			$post_data['built_year'], addslashes($post_data['video_link']), $post_data['sea_d'], $post_data['air_d'], $post_data['stn_d'],
+			$post_data['hiw_d'],$this->user->id, $post_data['detail_id'] );
+
+  			print vsprintf( $sql,$detail_value ) ;
+
 			$this->db->setQuery(vsprintf($sql,$detail_value));
 			return $this->db->query();
 		}
@@ -150,21 +150,21 @@ class PropertyModelAddproperty extends JModel
 			$post_data = JRequest::get('POST');
 			// here DESCRIPRION  field should be same as user write using tinymce
 			JRequest::watch($post_data,1,0);
-			$sql  = (intval($post_data['property_contact_id']) !== 0) ? "UPDATE " : "INSERT INTO ";
+			$sql  = (intval($post_data['contact_id']) !== 0) ? "UPDATE " : "INSERT INTO ";
 			$sql .= " #__property_contact SET
 												property_id=%d,
 												contact_office_name='%s',
 												contact_number='%s',
 												alternate_number='%s',
-												contact_person_name='%s',
+												contact_person='%s',
 												contact_address='%s',
 												display_address='%s',
 												contact_email='%s',";
-			$sql .= (intval($post_data['property_contact_id']) !== 0) ? " contact_updated_by=%d WHERE contact_id=%d "
+			$sql .= (intval($post_data['contact_id']) !== 0) ? " contact_updated_by=%d WHERE contact_id=%d "
 															: " contact_added_by=%d,contact_added_date=NOW() ";
 			$contact_value = array(($post_data['property_id']), addslashes($post_data['contact_office']),$post_data['contact_number'],
 			$post_data['alt_number'], addslashes($post_data['contact_person']), addslashes($post_data['contact_address']), $post_data['show_address'],
-			$post_data['contact_email'],$this->user->id,$post_data['property_contact_id'] );
+			$post_data['contact_email'],$this->user->id,$post_data['contact_id'] );
 			// print vsprintf( $sql,$contact_value ) ; jexit();
 			$this->db->setQuery(vsprintf($sql,$contact_value));
 			return $this->db->query();
@@ -174,7 +174,73 @@ class PropertyModelAddproperty extends JModel
 		}
 	}
 
+	/**
+	* function to rearrange $_FILES array
+	* Origianl $_FILES Array
+	Array
+	(
+    [prop_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => first_image,jpg
+                    [1] => second_image.jpg
+                )
 
+            [type] => Array
+                (
+                    [0] => image/jpeg
+                    [1] => image/png
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => /Applications/XAMPP/tmp/php/phpIPmbBR
+                    [1] => /Applications/XAMPP/tmp/php/phpsAUsX1
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 12392
+                    [1] => 678
+                )
+        )
+	)
+
+	after this function it will changes into
+
+	(
+    	[prop_image] => Array
+		(
+			[0]=>Array
+				(
+					[name] => first_image,jpg
+					[type] => image/jpeg
+					[tmp_name] => /Applications/XAMPP/tmp/php/phpIPmbBR
+					[error] => 0
+					[size] => 12392
+				)
+
+			[1] => Array
+			(
+				[name] => second_image.png
+				[type] => image/png
+				[tmp_name] => /Applications/XAMPP/tmp/php/phpsAUsX1
+				[error] => 0
+				[size] => 678
+			)
+		)
+	)
+
+	* @access public
+	* @code keshav mohta
+	*/
 
 	function fix_files_superglobal()
 	{
@@ -204,7 +270,7 @@ class PropertyModelAddproperty extends JModel
 		try
 		{
 			$post_data = JRequest::get('POST');
-			JRequest::watch($post_data);
+			//JRequest::watch($post_data);
 			//JRequest::watch($_FILES);
 			//JRequest::watch($_FILES['property_image'],1,0);
 			$this->fix_files_superglobal();

@@ -23,7 +23,7 @@ class PropertyViewUpload_images extends JView
 	*/
 	function display($tpl = null)
 	{
-		$property_id = JRequest::getVar('pid', NULL, 'GET');
+		//$property_id = JRequest::getVar('pid', NULL, 'GET');
      	$title_text = empty($property_id)? JText::_( 'Add' ) : JText::_( 'Update' );
  		JToolBarHelper::title( JText::_(" $title_text Images" ), 'user.png');
 // 		JToolBarHelper::save();
@@ -39,18 +39,18 @@ class PropertyViewUpload_images extends JView
 		$model =& $this->getModel();
 		//$base_model=$this->getModel('Property');
 		//JRequest::watch($base_model);
-		if(!empty($property_id) )
-		{
-// 			$detail_data=$base_model->getPropertyMoreDetail($property_detail_id);
-// 			$district_list=$base_model->getDistrictList($prop_data['property_province_id']);
-// 			$city_list=$base_model->getCityList($prop_data['property_district_id']);
-			//JRequest::watch($detail_data);
-		}
+// 		if(!empty($property_id) )
+// 		{
+// // 			$detail_data=$base_model->getPropertyMoreDetail($property_detail_id);
+// // 			$district_list=$base_model->getDistrictList($prop_data['property_province_id']);
+// // 			$city_list=$base_model->getCityList($prop_data['property_district_id']);
+// 			//JRequest::watch($detail_data);
+// 		}
 
 		//JRequest::watch($type_list);
 
 		//Assigning variable to view object so that it can be retrieve in default.php
-		$this->assignRef('property_id',$property_id);
+		$this->assignRef('property_id',$_SESSION['prop_id']);
 		$this->assignRef('title_text',$title_text);
 // 		$this->assignRef('district_list', $district_list);
 // 		$this->assignRef('city_list', $city_list);

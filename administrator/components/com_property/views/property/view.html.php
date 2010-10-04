@@ -22,6 +22,7 @@ class PropertyViewProperty extends JView
 		//JRequest::watch($propertyModel);
 		$prop_info=$propertyModel->getPropertyInfo();
 		//JRequest::watch($prop_detail);
+		unset($_SESSION['prop_id']);
 		$this->assignRef('prop_info', $prop_info);
         parent::display($tpl);
     }

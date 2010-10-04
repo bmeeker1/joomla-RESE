@@ -3,7 +3,7 @@
 	$document->addCustomTag('<script type="text/javascript">jQuery.noConflict();</script>');
 ?>
 <h4 align="right">
-	<a href="index.php?option=com_property&view=addProperty">Add Property</a>
+	<a href="index.php?option=com_property&view=addproperty">Add Property</a>
 </h4>
 <form>
 <table class="adminlist" width="100%" cellpadding="5" cellspacing="5">

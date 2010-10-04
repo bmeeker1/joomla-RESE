@@ -19,6 +19,8 @@ class PropertyControllerProperty extends PropertyController
 	public function __construct()
 	{
 		parent::__construct();
+		$this->db =& JFactory::getDBO();
+		$this->user =& JFactory::getUser();
 	}
 
 	public function __toString()
@@ -43,6 +45,7 @@ class PropertyControllerProperty extends PropertyController
 			JError::raiseError(403, JText::_('REQUESTFORBIDDEN'));
 		}
 		//Get the model to use the function
+		JRequest::watch($_POST);
 		$propertyModel = $this->getModel('addproperty');
 		$do  = (intval($_POST['property_id']) !== 0) ? "UPDATED " : "ADDED ";
 // 		$msg = ($propertyModel->save()) ? " Property $do successfully" : "Ooops! Error (-_-)";
@@ -50,23 +53,6 @@ class PropertyControllerProperty extends PropertyController
 		unset($_SESSION['prop_id']);
 		$_SESSION['prop_id'] = $insert_id;
 		return $result;
-// 		var_dump($result);
-// 		var_dump($insert_id);
-// 		die();
-//  	if($result)
-// 		{
-// 			$msg = " Property $do successfully";
-// 			$link = JRoute::_('index.php?option=com_property&view=xtrafeatures&format=raw');
-// 		}
-// 		else
-// 		{
-// 			$msg = "Kindly have a look on form,Something may be wrong (-_-)";
-// 			$link = JRoute::_('index.php?option=com_property&view=addproperty');
-// 		}
-// 		$link = JRoute::_('index.php?option=com_property');
-		//$link = str_replace("&amp;", "&", $link);
-		//Redirect
-		//$this->setRedirect($link, $msg);
 	}
 
 	public function storeDetails()
@@ -79,7 +65,7 @@ class PropertyControllerProperty extends PropertyController
 		}
 		//Get the model to use the function
 		$propertyModel = $this->getModel('addproperty');
-		$do  = (intval($_POST['property_detail_id']) !== 0) ? "UPDATED " : "ADDED ";
+		$do  = (intval($_POST['detail_id']) !== 0) ? "UPDATED " : "ADDED ";
 		return $propertyModel->storeDetails();
 // 		if(true)
 // 		{
@@ -106,22 +92,22 @@ class PropertyControllerProperty extends PropertyController
 		}
 		//Get the model to use the function
 		$propertyModel = $this->getModel('addproperty');
-		$do  = (intval($_POST['property_contact_id']) !== 0) ? "UPDATED " : "ADDED ";
+		$do  = (intval($_POST['contact_id']) !== 0) ? "UPDATED " : "ADDED ";
+		return $propertyModel->storeContact();
 // 		$msg = ($propertyModel->save()) ? " Property $do successfully" : "Ooops! Error (-_-)";
-		if($propertyModel->storeContact())
-		{
-			$msg = " Contact $do successfully";
-			$link = JRoute::_('index.php?option=com_property&view=upload_images&format=raw');
-		}
-		else
-		{
-			$msg = "Something may be wrong (-_-)";
-			$link = JRoute::_('index.php?option=com_property&view=conact_detail&format=raw');
-		}
-// 		$link = JRoute::_('index.php?option=com_property');
-		$link = str_replace("&amp;", "&", $link);
-		//Redirect
-		$this->setRedirect($link, $msg);
+// 		if(true)
+// 		{
+// 			$msg = " Contact $do successfully";
+// 			$link = JRoute::_('index.php?option=com_property&view=upload_images&format=raw');
+// 		}
+// 		else
+// 		{
+// 			$msg = "Something may be wrong (-_-)";
+// 			$link = JRoute::_('index.php?option=com_property&view=conact_detail&format=raw');
+// 		}
+// 		$link = str_replace("&amp;", "&", $link);
+// // 		Redirect
+// 		$this->setRedirect($link, $msg);
 	}
 
 
@@ -138,16 +124,9 @@ class PropertyControllerProperty extends PropertyController
 		//Get the model to use the function
 		$propertyModel = $this->getModel('addproperty');
 		$do  = (intval($_POST['property_id']) !== 0) ? "UPDATED " : "ADDED ";
-		if($propertyModel->storePropertyImages())
-		{
-			$msg = " Property Images $do successfully";
-			$link = JRoute::_('index.php?option=com_property');
-		}
-		else
-		{
-			$msg = "Kindly have a look on form,Something may be wrong on Details(-_-)";
-			$link = JRoute::_('index.php?option=com_property');
-		}
+		$msg = $propertyModel->storePropertyImages() ? " Property $do successfully" : " Error! Please Check the details (-,-) ";
+		unset($_SESSION['prop_id']);
+		$link = JRoute::_('index.php?option=com_property');
 		$link = str_replace("&amp;", "&", $link);
 		//Redirect
 		$this->setRedirect($link, $msg);
