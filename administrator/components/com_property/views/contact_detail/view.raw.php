@@ -23,7 +23,6 @@ class PropertyViewContact_detail extends JView
 	*/
 	function display($tpl = null)
 	{
-
 		$property_id=$_SESSION['prop_id'];
     	$title_text = empty($property_id)? JText::_( 'Add' ) : JText::_( 'Update' );
 		JToolBarHelper::title( JText::_(" $title_text Contact Detail" ), 'user.png');
@@ -34,7 +33,7 @@ class PropertyViewContact_detail extends JView
 		if(!empty($property_id) )
 		{
   			 $contact_data=$base_model->getPropertyContactDetail($property_id);
-			 JRequest::watch($contact_data);
+			 //JRequest::watch($contact_data);
 		}
 
 		//Assigning variable to view object so that it can be retrieve in default.php

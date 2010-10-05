@@ -51,7 +51,6 @@ class PropertyControllerProperty extends PropertyController
 // 		$msg = ($propertyModel->save()) ? " Property $do successfully" : "Ooops! Error (-_-)";
 		list($result,$insert_id)=$propertyModel->save();
 		unset($_SESSION['prop_id']);
-		$_SESSION['prop_id'] = $insert_id;
 		return $result;
 	}
 

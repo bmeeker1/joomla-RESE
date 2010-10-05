@@ -70,16 +70,16 @@ class PropertyModelAddproperty extends JModel
 			$post_data['prop_province_id'], $post_data['prop_district_id'], $post_data['prop_city_id'], addslashes($post_data['address1']),
 			addslashes($post_data['address2']), $post_data['zip'], $post_data['price'], $post_data['description'],$this->user->id,
 			$post_data['property_id'] );
-			print vsprintf( $sql,$property_value ) ;
+			//print vsprintf( $sql,$property_value ) ;
 			$this->db->setQuery(vsprintf($sql,$property_value));
 			$this->db->query();
 			if($this->db->getAffectedRows())
 			{
 				//retrive recently inserted/updated property id from database
-				$insert_id = empty($post_data['property_id']) ? $this->db->insertid() : $post_data['property_id'];
-				$return_array=array('true',$insert_id);
+				$insert_id = $this->db->insertid();
+				$_SESSION['prop_id'] = $insert_id;
 			}
-			return $return_array;
+			return true;
 		}
 		catch(Exception $e){
 				//who cares!

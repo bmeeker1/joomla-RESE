@@ -30,6 +30,9 @@ class PropertyViewAddproperty extends JView
 		$city_list =array();
 
 		$property_id = JRequest::getVar('pid', NULL, 'GET');
+		if(intval($property_id) !== 0 ) {
+			$_SESSION['prop_id'] = $property_id;
+		}
     	$title_text = empty($property_id)? JText::_( 'Add' ) : JText::_( 'Update' );
 		JToolBarHelper::title( JText::_(" $title_text Property" ), 'user.png');
 		JToolBarHelper::save();

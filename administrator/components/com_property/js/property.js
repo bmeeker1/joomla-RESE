@@ -17,8 +17,7 @@ jQuery(function () {
                 required: true
             },
             price: {
-                required: true,
-                is_real: true
+                required: true
             }
         },
         messages: {
@@ -30,8 +29,7 @@ jQuery(function () {
                 required: "Please write Address"
             },
             price: {
-                required: "Please write Price",
-                is_real: "Enter only amonut"
+                required: "Please write Price"
             }
         },
         submitHandler: function(form) {
