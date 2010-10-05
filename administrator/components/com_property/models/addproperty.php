@@ -50,7 +50,7 @@ class PropertyModelAddproperty extends JModel
 			$post_data = JRequest::get('POST');
 			// here DESCRIPRION  field should be same as user write using tinymce
 			$post_data['description'] = JRequest::getVar('property_description', '', 'POST', 'string', JREQUEST_ALLOWRAW);
-			//JRequest::watch($post_data,1,0);
+			JRequest::watch($post_data,1,0);
 			$sql  = (intval($post_data['property_id']) !== 0) ? "UPDATE " : "INSERT INTO ";
 			$sql .= " #__property SET
 												property_name='%s',
@@ -70,14 +70,15 @@ class PropertyModelAddproperty extends JModel
 			$post_data['prop_province_id'], $post_data['prop_district_id'], $post_data['prop_city_id'], addslashes($post_data['address1']),
 			addslashes($post_data['address2']), $post_data['zip'], $post_data['price'], $post_data['description'],$this->user->id,
 			$post_data['property_id'] );
-			//print vsprintf( $sql,$property_value ) ;
+			//print vsprintf( $sql,$property_value ) ; jexit();
 			$this->db->setQuery(vsprintf($sql,$property_value));
 			$this->db->query();
 			if($this->db->getAffectedRows())
 			{
 				//retrive recently inserted/updated property id from database
 				$insert_id = $this->db->insertid();
-				$_SESSION['prop_id'] = $insert_id;
+				unset($_SESSION['prop_id']);
+				$_SESSION['prop_id'] = empty($post_data['property_id']) ? $insert_id : $post_data['property_id'];
 			}
 			return true;
 		}
@@ -98,8 +99,8 @@ class PropertyModelAddproperty extends JModel
 		try
 		{
 			$post_data = JRequest::get('POST');
-			// here DESCRIPRION  field should be same as user write using tinymce
-			$post_data['detail'] = JRequest::getVar('more_detail', '', 'POST', 'string', JREQUEST_ALLOWRAW);
+			// here DESCRIPRION  field should be same as user write using CLEditor
+			$post_data['long_detail'] = JRequest::getVar('full_detail', '', 'POST', 'string', JREQUEST_ALLOWRAW);
 			//JRequest::watch($post_data,1,0);
 			$sql  = (intval($post_data['detail_id']) !== 0) ? "UPDATE " : "INSERT INTO ";
 			$sql .= " #__property_detail SET
@@ -121,7 +122,7 @@ class PropertyModelAddproperty extends JModel
 			$sql .= (intval($post_data['detail_id']) !== 0) ? " updated_by=%d WHERE property_detail_id=%d "
 															: " added_by=%d,added_date=NOW() ";
 			$detail_value = array ( $post_data['property_id'], $post_data['bedroom'], $post_data['bathroom'], $post_data['kitchen'],
-            $post_data['cover_area'], $post_data['cover_veranda'], $post_data['swiming_pool'], $post_data['p_cond'], addslashes($post_data['detail']),
+            $post_data['cover_area'], $post_data['cover_veranda'], $post_data['swiming_pool'], $post_data['p_cond'], addslashes($post_data['long_detail']),
 			$post_data['built_year'], addslashes($post_data['video_link']), $post_data['sea_d'], $post_data['air_d'], $post_data['stn_d'],
 			$post_data['hiw_d'],$this->user->id, $post_data['detail_id'] );
 
@@ -270,11 +271,32 @@ class PropertyModelAddproperty extends JModel
 		try
 		{
 			$post_data = JRequest::get('POST');
-			//JRequest::watch($post_data);
-			//JRequest::watch($_FILES);
-			//JRequest::watch($_FILES['property_image'],1,0);
+			JRequest::watch($post_data);
 			$this->fix_files_superglobal();
-			JRequest::watch($_FILES);
+			JRequest::watch($_FILES,0,0);
+			if ($post_data['delete_this'] && $post_data['property_id'] )
+			{
+				foreach($post_data['delete_this'] as $k=>$v)
+				{
+					$query = "SELECT image_path,thumb_path FROM #__property_image  WHERE image_id =".intval($v);
+					$this->db->setQuery($query);
+					$arr_image = $this->db->loadAssoc(); // return image path & thumb path
+					//JRequest::watch($arr_image,0,0);
+					foreach ($arr_image as $ikey)
+					{
+// 					echo  "<br/>Path:".JPATH_SITE.DS.$ikey;
+						if( is_file(JPATH_SITE.DS.$ikey) )
+						{
+							@unlink(JPATH_SITE.DS.$ikey);
+						}
+					}
+					$delqry ="DELETE FROM #__property_image WHERE image_id =".intval($v);
+					$this->db->setQuery($delqry);
+					$this->db->query();
+// 					echo  "<br/>".__LINE__." Affected Rows:".$this->db->getAffectedRows();
+				}
+			}
+
 			//Insert all images related to the ad
 			foreach ($_FILES['property_image'] as $key => &$value)
 			{
@@ -283,52 +305,14 @@ class PropertyModelAddproperty extends JModel
 					$imageResized = $this->imageResize($value);
 					JRequest::watch($imageResized,1,0);
 					//Delete data from the database if edit property and status is 'pending for approval'
-					if ($post_data['image_id'] && $postdata['property_id'] )
-					{
-						echo "<br/>".__LINE__." Inside nested if";
-
-						$query = "SELECT image_path FROM #__property_image  WHERE image_id = %d ";
-
-						echo "<br/>".__LINE__." Image Qry";
-						print sprintf($query, $imgid);
-
-						$this->db->setQuery(sprintf($query, $pid));
-						$image_path = $this->db->loadResult(); // return image  path
-						//JRequest::watch($arr_image_id);
-						foreach ($arr_image_id as &$imgkey)
-						{
-							if( is_file(JPATH_SITE.DS.$image_path) )
-							{
-								@unlink(JPATH_SITE.DS.$image_path);
-							}
-							$delqry = "DELETE FROM #__property_image WHERE image_id =%d";
-
-							echo "<br/>".__LINE__." Old Image delete Qry";
-							print sprintf($delqry, $imgid);
-
-							$this->db->setQuery(sprintf($delqry, $imgid));
-							echo "<br/>".__LINE__." Old Image Deleted:".$this->db->query();
-							echo  "<br/>".__LINE__." Affected Rows:".$this->db->getAffectedRows();
-
-						/** NOTE: on deleteing image FROM images table , record referenceing that image id
-						* in table_imagead  will be deleted automatically due to foreign key constraints */
-// 							$imgadqry = "DELETE FROM #__{$suffix}imagead WHERE image_id=%d";
-// 							$this->db->setQuery(vsprintf($imgadqry, $imgkey['image_id']));
-// 							echo "<br/>".__LINE__."ImageAD Deleted:".$this->db->query();
-
-						}
-					}
-
-					$image_query  = (intval($_POST['property_id']) !== 0) ? "UPDATE " : "INSERT INTO ";
-					$image_query .= " #__property_image SET
-															property_id=%d,
-															image_title='%s',
-															image_path='%s',
-															thumb_path ='%s',
-															image_size =%d,
-															image_type= '%s',";
-					$image_query .= (intval($_POST['property_id']) !== 0) ? " updated_by=%d WHERE image_id=%d "
-					        									  		  : " added_by=%d,added_date=NOW() ";
+					$image_query = "INSERT INTO #__property_image SET
+																	property_id=%d,
+																	image_title='%s',
+																	image_path='%s',
+																	thumb_path ='%s',
+																	image_size =%d,
+																	image_type= '%s',
+					        									  	added_by=%d ";
 					$image_detail = array ($post_data['property_id'], $post_data['image_title'][$key], $imageResized['image_path'],
 					$imageResized['thumb_path'], $value['size'], $value['type'],$this->user->id, $post_data['image_id']);
 					print vsprintf( $image_query,$image_detail ) ;
@@ -356,14 +340,13 @@ class PropertyModelAddproperty extends JModel
 			$dimension = array();
 			$paths =array();
 			//Modifying filename  and make unique by appending timestamp
-			$old_title = $image['name']; var_dump($old_title);
+			$old_title = $image['name']; //var_dump($old_title);
   			$imageinfo = pathinfo($old_title);
- 			JRequest::watch($imageinfo);
+ 			JRequest::watch($imageinfo,1,0);
 			$rename = preg_replace('/\W/',' ', $imageinfo['filename']); // all Non word (\W === [^0-9a-zA-z_] ) character changed into ' '
-			var_dump($rename);
-			$rename = trim($rename); var_dump($rename);
-			$rename = strtolower($rename); 	var_dump($rename);
-			$rename=substr($rename,0,200);	var_dump($rename);
+			$rename = trim($rename); //var_dump($rename);
+			$rename = strtolower($rename); 	//var_dump($rename);
+			$rename=substr($rename,0,200);	//var_dump($rename);
 			$rename = preg_replace('/\s+/','-', $rename); 	//var_dump($rename); // now all spaces are changed into '-'
 			$new_title= $rename."_".time().".".$imageinfo['extension']; // finally append timestamp in filename and add extension
 			var_dump($new_title);

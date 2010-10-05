@@ -45,13 +45,10 @@ class PropertyControllerProperty extends PropertyController
 			JError::raiseError(403, JText::_('REQUESTFORBIDDEN'));
 		}
 		//Get the model to use the function
-		JRequest::watch($_POST);
+// 		JRequest::watch($_POST);
 		$propertyModel = $this->getModel('addproperty');
 		$do  = (intval($_POST['property_id']) !== 0) ? "UPDATED " : "ADDED ";
-// 		$msg = ($propertyModel->save()) ? " Property $do successfully" : "Ooops! Error (-_-)";
-		list($result,$insert_id)=$propertyModel->save();
-		unset($_SESSION['prop_id']);
-		return $result;
+		return $propertyModel->save();
 	}
 
 	public function storeDetails()
@@ -66,19 +63,6 @@ class PropertyControllerProperty extends PropertyController
 		$propertyModel = $this->getModel('addproperty');
 		$do  = (intval($_POST['detail_id']) !== 0) ? "UPDATED " : "ADDED ";
 		return $propertyModel->storeDetails();
-// 		if(true)
-// 		{
-// 			$msg = " Property Details $do successfully";
-// 			$link = JRoute::_('index.php?option=com_property&view=contact_detail&format=raw');
-// 		}
-// 		else
-// 		{
-// 			$msg = "Kindly have a look on form,Something may be wrong on Details(-_-)";
-// 			$link = JRoute::_('index.php?option=com_property');
-// 		}
-// 		$link = str_replace("&amp;", "&", $link);
-// 		//Redirect
-// 		$this->setRedirect($link, $msg);
 	}
 
 	public function storeContact()
@@ -93,20 +77,6 @@ class PropertyControllerProperty extends PropertyController
 		$propertyModel = $this->getModel('addproperty');
 		$do  = (intval($_POST['contact_id']) !== 0) ? "UPDATED " : "ADDED ";
 		return $propertyModel->storeContact();
-// 		$msg = ($propertyModel->save()) ? " Property $do successfully" : "Ooops! Error (-_-)";
-// 		if(true)
-// 		{
-// 			$msg = " Contact $do successfully";
-// 			$link = JRoute::_('index.php?option=com_property&view=upload_images&format=raw');
-// 		}
-// 		else
-// 		{
-// 			$msg = "Something may be wrong (-_-)";
-// 			$link = JRoute::_('index.php?option=com_property&view=conact_detail&format=raw');
-// 		}
-// 		$link = str_replace("&amp;", "&", $link);
-// // 		Redirect
-// 		$this->setRedirect($link, $msg);
 	}
 
 
@@ -123,7 +93,7 @@ class PropertyControllerProperty extends PropertyController
 		//Get the model to use the function
 		$propertyModel = $this->getModel('addproperty');
 		$do  = (intval($_POST['property_id']) !== 0) ? "UPDATED " : "ADDED ";
-		$msg = $propertyModel->storePropertyImages() ? " Property $do successfully" : " Error! Please Check the details (-,-) ";
+		$msg = $propertyModel->storePropertyImages() ? "Property $do successfully" : "Error! Please Check the details (-,-) ";
 		unset($_SESSION['prop_id']);
 		$link = JRoute::_('index.php?option=com_property');
 		$link = str_replace("&amp;", "&", $link);
@@ -136,7 +106,7 @@ class PropertyControllerProperty extends PropertyController
 	{
 		//JRequest::watch(func_get_args());
 		$pid=JRequest::getVar('pid','','GET');
-		$qry  = " DELETE FROM #__property WHERE property_id=".mysql_real_escape_string($pid);
+		$qry  = "DELETE FROM #__property WHERE property_id=".mysql_real_escape_string($pid);
 		$this->db->setQuery($qry);
 		$msg = $this->db->query() ? " Property DELETED successfully" : "Ooops! Error (-_-)";
 		$link = JRoute::_('index.php?option=com_property');

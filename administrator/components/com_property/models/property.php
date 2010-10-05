@@ -123,6 +123,23 @@ class PropertyModelProperty extends JModel
 		return $arr_contactDetail;
 	}
 
+	/**
+	* Function to retrive all image details of a given property id
+	* @access public
+	* @code keshav mohta
+	* @param int pid property id
+	* @return Associative multiple array containing complete image details
+	*/
+
+	public function getPropertyImageDetails($pid=null)
+	{
+		$sql= "SELECT * FROM #__property_image WHERE property_id=".mysql_real_escape_string($pid) ;
+		$this->db->setQuery($sql);
+		$arr_imageDetail=$this->db->loadAssocList(); // see the function here
+		return $arr_imageDetail;
+	}
+
+
 
 	/**
 	* Function to retrive all type of a property

@@ -171,7 +171,7 @@
 			<tr>
 				<td align="right" valign="top"><label >Long Description:</label></td>
 				<td align="left" valign="top">
-					<textarea id="more_detail" name="more_detail"><?php echo $this->detail_data['property_full_description'];?></textarea>
+					<textarea id="full_detail" name="full_detail"><?php echo $this->detail_data['property_full_description'];?></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -223,11 +223,9 @@
 				</td>
 				<td>
 					<input type="submit" value="<?php echo $this->title_text; ?>" name="doAction" class="submit" id="doAction" />
-					<?php if(!empty($this->property_detail_id)) { ?>
-					<input type="button" name="Back" onclick="javascript:history.go(-1)" value="Back" class="submit" />
-					<?php } else { ?>
-					<input type="reset" value="Clear" name="Clear" class="submit" />
-					<?php } ?>
+				<?php if(empty($this->property_detail_id)) : ?>
+					<input type="reset" value="Clear" name="Clear" class="submit" id="clear"/>
+				<?php endif; ?>
 				</td>
 			</tr>
 		</table>
@@ -240,7 +238,7 @@
 		};
 
 	jQuery(document).ready(function() {
-		jQuery("#more_detail").cleditor();
+		jQuery("#full_detail").cleditor();
 
 	jQuery.validator.addMethod('is_real', function (value, element) {
         return this.optional(element) || /^\d*\.?\d*$/i.test(value);

@@ -22,7 +22,6 @@ class PropertyViewAddproperty extends JView
 	* @access public
 	*/
 
-
 	function display($tpl = null)
 	{
 		$province_list =array();

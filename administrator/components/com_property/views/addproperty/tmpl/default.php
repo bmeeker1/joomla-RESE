@@ -174,11 +174,9 @@
 					</td>
 					<td align="left">
 						<input type="submit" value="<?php echo $this->title_text; ?>" name="doAction" class="submit"  />
-						<?php if(!empty($this->property_id)) { ?>
-						<input type="button" name="Back" onclick="javascript:history.go(-1)" value="Back" class="submit"/>
-						<?php } else { ?>
-						<input type="reset"  value="Clear" name="Clear" class="submit" id="clear"/>
-						<?php } ?>
+					<?php if(empty($this->property_id)) : ?>
+						<input type="reset" value="Clear" name="Clear" class="submit" id="clear"/>
+					<?php endif; ?>
 					</td>
 				</tr>
 			</table>

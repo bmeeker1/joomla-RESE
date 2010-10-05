@@ -1,13 +1,39 @@
-<?php
-	defined('_JEXEC') or die('Restricted access');
-?>
+<?php	defined('_JEXEC') or die('Restricted access');?>
 <!--<link rel="stylesheet" href="components/com_property/css/custom.css" type="text/css" >
 <script type="text/javascript" src="components/com_property/js/jquery.min.js"></script>
 <script type="text/javascript" src="components/com_property/js/jquery.validate.js"></script>
 <script type="text/javascript" src="components/com_property/js/jquery.form.js"></script>-->
+<style type="text/css">
+div.previous_image {
+	padding:5px 0px;
+	height:110px;
+	margin-bottom:10px;
+	border-bottom:1px dotted #9F7777;
+	width:100%;
+}
+.fade {
+	background-color:#EFE0E0;
+}
+</style>
 <fieldset >
 <form name="imageUploadForm" id="imageUploadForm" action="" method="POST" enctype="multipart/form-data" >
 	<label style="margin:3px;font:bold 14px verdna;color:#5F6F7F">Upload Images</label>
+	<?php if (!empty($this->image_data))  : ?>
+	<fieldset style="width:700px;">
+		<legend>Previous Images</legend>
+		<?php foreach ($this->image_data as $key) { ?>
+		<div class="previous_image">
+			<div style="float:right;">
+				<img src="<?php echo '../'.$key['thumb_path'];?>" title="<?php echo $key['image_title']; ?>" border="0"/>
+			</div>
+			<div style="float:left;">
+					<input type="text" name="old_image_title" size="47" value="<?php echo $key['image_title']; ?>" ><br/>
+					<input type="checkbox" class="check" name="delete_this[]" value="<?php echo $key['image_id'];?>" >Delete
+			</div>
+		</div>
+		<?php } /* end of foreach */ ?>
+	</fieldset>
+	<?php endif; ?>
 	<table border="0" width="80%" cellpadding="2" cellspacing="3" id="mainTable">
 	<tbody>
 		<tr id="imageRow">
@@ -38,11 +64,7 @@
 		<tr>
 			<td align="right">
 				<input type="submit" value="Upload" name="upload" class="submit" id="upload" />
-				<?php if(!empty($this->property_id)) { ?>
-				<input type="button" name="Back" onclick="javascript:history.go(-1)" value="Back" class="submit" />
-				<?php } else { ?>
 				<input type="reset"  value="Clear" name="Clear" class="submit" />
-				<?php } ?>
 			</td>
 		</tr>
 	</tfoot>
@@ -56,9 +78,9 @@
 </fieldset>
 <script type="text/javascript">
 jQuery(document).ready(function () {
-    jQuery('#addRow').live('click', function(){
-        var quantity = jQuery('table[class^=imageTable]').length;
-        var clonedRow = jQuery('#mainTable > tbody > tr:first').clone(true);
+    jQuery('#addRow').click(function(){
+        var quantity = jQuery('table[class=imageTable]').length;
+        var clonedRow = jQuery('table#mainTable > tbody > tr:first').clone(true);
         var textID = clonedRow.find(':text').attr('id');
         clonedRow.find('label').attr('for', function () {
             return textID + (++quantity);
@@ -71,5 +93,14 @@ jQuery(document).ready(function () {
             return this.id + quantity;
         }).val('').end().appendTo('#mainTable');
     });
+	  jQuery('div > input:checkbox').click( function(){
+			console.log(jQuery(this).attr("checked"));
+		if (jQuery(this).attr("checked")) {
+			jQuery(this).parent().parent('div').addClass('fade');
+		} else {
+			jQuery(this).parent().parent('div').removeClass('fade');
+		}
+	});
+
 });
 </script>
