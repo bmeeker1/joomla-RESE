@@ -7,6 +7,15 @@
 <script type="text/javascript" src="components/com_property/js/jquery.cleditor.js"></script>
 <script type="text/javascript" src="components/com_property/js/jquery.validate.js"></script>
 <script type="text/javascript" src="components/com_property/js/jquery.form.js"></script>-->
+<style type="text/css">
+label.error {
+	border-top:1px dotted red;
+	color:red;
+	float:right;
+	margin-right:20em;
+	margin-top:0.3em;
+}
+</style>
 <fieldset >
 	<form name="propertyDetailForm" id="propertyDetailForm" action="" method="POST">
 		<label style="margin:3px;font:bold 14px verdna;color:#5F6F7F">Specifications</label>
@@ -53,7 +62,15 @@
 			<tr>
 				<td align="right" valign="top"><label for="cover_area">Total Covered Area:</label></td>
 				<td align="left" valign="top">
-					<input type="text" name="cover_area" id="cover_area" value="<?php echo $this->detail_data['total_covered_area'] ?>">&nbsp;m&sup2;
+					<input type="text" name="cover_area" id="cover_area" value="<?php echo $this->detail_data['total_covered_area'] ?>">
+					<select id="cover_area_unit" name="cover_area_unit" title="Please select measure unit" validate="required:true" >
+						<option value="" >Measure unit</option>
+					<?php foreach ($this->measure_units as $k=>$v) { ?>
+						<option value="<?php echo $v['unit_id']; ?>" <?php if($this->detail_data['cover_area_unit']==$v['unit_id']) {?> selected="selected"
+						<?php }?> title="<?php echo $v['unit_name'];?>" >	<?php echo $v['unit_symbol'];?>
+						</option>
+					<?php } ?>
+					</select>
 				</td>
 			</tr>
 			<tr>
@@ -61,7 +78,14 @@
 				<td align="left" valign="top">
 					<input type="text" name="cover_veranda" id="cover_veranda"
 					value="<?php echo (!empty($this->detail_data['total_covered_veranda'])) ? $this->detail_data['total_covered_veranda'] : '' ; ?>">
-					&nbsp;m&sup2;
+					<select id="cover_vrnda_unit" name="cover_vrnda_unit" title="Please select measure unit" validate="required:true" >
+						<option value="" >Measure unit</option>
+					<?php foreach ($this->measure_units as $k=>$v) { ?>
+						<option value="<?php echo $v['unit_id']; ?>" <?php if($this->detail_data['cover_veranda_unit']==$v['unit_id']) {?> selected="selected"
+						<?php }?> title="<?php echo $v['unit_name'];?>" >	<?php echo $v['unit_symbol'];?>
+						</option>
+					<?php } ?>
+					</select>
 				</td>
 			</tr>
 			<tr>
@@ -244,6 +268,7 @@
         return this.optional(element) || /^\d*\.?\d*$/i.test(value);
     }, 'Invalid Area!');
 
+
 	var validator = jQuery("#propertyDetailForm").validate({
 			debug:true,
 			rules: {
@@ -251,8 +276,14 @@
 					required:true,
 					is_real:true
 				},
+				cover_area_unit : {
+					required: function(element) { return !jQuery(element).siblings(':text').is(':blank');}
+				},
 				cover_veranda: {
 					is_real:true
+				},
+				cover_vrnda_unit : {
+					required: function(element) { return !jQuery(element).siblings(':text').is(':blank');}
 				},
 				sea_d: {
 					is_real:true
@@ -270,7 +301,7 @@
 			},
 			messages: {
 				cover_area: {
-					required:"Pleaae write covered area",
+					required:"Please write covered area",
 				}
 			},
 			submitHandler: function(form) {

@@ -109,7 +109,9 @@ class PropertyModelAddproperty extends JModel
 												total_bathroom=%d,
 												total_kitchen=%d,
 												total_covered_area=%01.3f,
+												cover_area_unit=%d,
 												total_covered_veranda=%01.3f,
+												cover_veranda_unit=%d,
 												swiming_pool='%s',
 												property_condition_id=%d,
 												property_full_description='%s',
@@ -122,11 +124,12 @@ class PropertyModelAddproperty extends JModel
 			$sql .= (intval($post_data['detail_id']) !== 0) ? " updated_by=%d WHERE property_detail_id=%d "
 															: " added_by=%d,added_date=NOW() ";
 			$detail_value = array ( $post_data['property_id'], $post_data['bedroom'], $post_data['bathroom'], $post_data['kitchen'],
-            $post_data['cover_area'], $post_data['cover_veranda'], $post_data['swiming_pool'], $post_data['p_cond'], addslashes($post_data['long_detail']),
-			$post_data['built_year'], addslashes($post_data['video_link']), $post_data['sea_d'], $post_data['air_d'], $post_data['stn_d'],
-			$post_data['hiw_d'],$this->user->id, $post_data['detail_id'] );
+            $post_data['cover_area'],$post_data['cover_area_unit'], $post_data['cover_veranda'], $post_data['cover_vrnda_unit'],
+			$post_data['swiming_pool'], $post_data['p_cond'], addslashes($post_data['long_detail']), $post_data['built_year'],
+			addslashes($post_data['video_link']), $post_data['sea_d'], $post_data['air_d'], $post_data['stn_d'], $post_data['hiw_d'],
+			$this->user->id, $post_data['detail_id'] );
 
-  			print vsprintf( $sql,$detail_value ) ;
+  			//print vsprintf( $sql,$detail_value ) ;
 
 			$this->db->setQuery(vsprintf($sql,$detail_value));
 			return $this->db->query();

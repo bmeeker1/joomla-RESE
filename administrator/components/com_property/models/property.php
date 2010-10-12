@@ -158,6 +158,21 @@ class PropertyModelProperty extends JModel
 	}
 
 	/**
+	* Function to retrive all measure units from db
+	* @access public
+	* @code keshav mohta
+	* @return Associative array containing unit name, unit symbol and unit id
+	*/
+
+	public function getMeasureUnits()
+	{
+		$qry = "SELECT * FROM #__property_measure_unit WHERE unit_status='t' ";
+		$this->db->setQuery($qry);
+		$arr_unit=$this->db->loadAssocList();
+		return $arr_unit;
+	}
+
+	/**
 	* Function to retrive all conditions described in db
 	* @access public
 	* @code keshav mohta
@@ -241,6 +256,19 @@ class PropertyModelProperty extends JModel
 		$arr_district=$this->db->loadAssocList();
 		return $arr_district;
 	}
+	public function pronameinfo()
+	{
+		//echo "hi";jexit();
+		$qry  = " SELECT * FROM  #__property  ";
+		echo $qry; jexit();
+		//$qry .= empty($did) ? "" : " AND district_id=".mysql_real_escape_string($did);
+		//$qry .= " ORDER BY city_name ";
+		//$this->db->setQuery($qry);
+		$arr_district=$this->db->loadAssocList();
+		return $arr_district;
+
+	}
+
 
 }
 ?>

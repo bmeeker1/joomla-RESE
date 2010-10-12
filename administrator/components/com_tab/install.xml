@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="1.5.0">
+	<name>tab</name>
+	<!-- The following elements are optional and free of formatting conttraints -->
+	<creationDate>2010-09-10</creationDate>
+	<author>Devanand Bhoir</author>
+	<authorEmail>b.devanand@agiletechnosys.com</authorEmail>
+	<authorUrl>http://www.example.org</authorUrl>
+	<copyright>Copyright Info</copyright>
+	<license>License Info</license>
+	<!--  The version string is recorded in the components table -->
+	<version>4.01</version>
+	<!-- The description is optional and defaults to the name -->
+	<description>Description of the component ...</description>
+
+	<!-- Site Main File Copy Section -->
+	<files folder="site">
+		<filename>controller.php</filename>
+		<filename>tab.php</filename>
+		<filename>index.html</filename>
+		<filename>models/tab.php</filename>
+		<filename>views/tab/index.html</filename>
+		<filename>views/tab/view.html.php</filename>
+		<filename>views/tab/tmpl/index.html</filename>
+		<filename>views/tab/tmpl/default.php</filename>
+		<filename>views/index.html</filename>
+	</files>
+
+	<install>
+		<sql>
+			<file charset="utf8" driver="mysql">install.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file charset="utf8" driver="mysql">uninstall.sql</file>
+		</sql>
+	</uninstall>	
+
+	<administration>
+		<!-- Administration Menu Section -->
+		<menu>tab</menu>
+		
+		<!-- Administration Main File Copy Section -->
+		<!-- Note the folder attribute: This attribute describes the folder
+			to copy FROM in the package to install therefore files copied
+			in this section are copied from /admin/ in the package -->
+		<files folder="admin">
+			<!-- Site Main File Copy Section -->
+			<filename>tab.php</filename>
+			<filename>index.html</filename>
+			<filename>install.sql</filename>
+			<filename>uninstall.sql</filename>
+			<filename>controller.php</filename>
+			<filename>controllers/tab.php</filename>
+			<filename>controllers/index.html</filename>
+			<filename>models/tabs.php</filename>
+			<filename>models/tab.php</filename>
+			<filename>models/index.html</filename>
+			<filename>tables/tab.php</filename>
+			<filename>tables/index.html</filename>
+			<filename>views/tab/view.html.php</filename>
+			<filename>views/tab/tmpl/form.php</filename>
+			<filename>views/tab/index.html</filename>
+			<filename>views/tab/tmpl/index.html</filename>
+			<filename>views/tabs/view.html.php</filename>
+			<filename>views/tabs/index.html</filename>
+			<filename>views/tabs/tmpl/default.php</filename>
+			<filename>views/tabs/tmpl/index.html</filename>
+		</files>		
+	</administration>
+</install>

@@ -80,6 +80,7 @@ div.previous_image {
 jQuery(document).ready(function () {
     jQuery('#addRow').click(function(){
         var quantity = jQuery('table[class=imageTable]').length;
+	alert(quantity);
         var clonedRow = jQuery('table#mainTable > tbody > tr:first').clone(true);
         var textID = clonedRow.find(':text').attr('id');
         clonedRow.find('label').attr('for', function () {

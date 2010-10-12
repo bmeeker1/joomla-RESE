@@ -1,0 +1,12 @@
+ --------------------
+ Domain: erarealestate.com
+ Ip: 72.29.76.194 
+ HasCgi: y
+ UserName: erareale
+ PassWord: )T3ib$iK83;V
+ 
+ -----------
+ db name :erareale_sugar
+ user: erareale_sugar
+ password: @gilets
+ 

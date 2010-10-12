@@ -55,11 +55,11 @@ jQuery(function () {
 			}
       }).bind("tabsselect tabsload", function (event, ui) {
         selecTabIndex = jQuery('#tabs').tabs('option', 'selected');
-//         if (selecTabIndex == 0) {
-//             var isValid = jQuery("#addPropertyForm").valid();
-//             if (!isValid) { alert('Please fill Basic details'); }
-//             return isValid;
-//         }
+        if (selecTabIndex == 0) {
+            var isValid = jQuery("#addPropertyForm").valid();
+            if (!isValid) { alert('Please fill Basic details'); }
+            return isValid;
+        }
         if (ui.index == 2) {
             jQuery("#contact_number").mask("(999) 999-9999");
             jQuery("#alt_number").mask("(999) 999-9999");

@@ -37,13 +37,16 @@ class PropertyViewXtrafeatures extends JView
 
      	$title_text = empty($detail_data['property_detail_id'])? JText::_( 'Add' ) : JText::_( 'Update' );
  		JToolBarHelper::title( JText::_(" $title_text Property Details" ), 'user.png');
-		$condition_list=$base_model->getPropertyCondition();
+		$measure_units = $base_model->getMeasureUnits();
+		//JRequest::watch($measure_units);
+		$condition_list = $base_model->getPropertyCondition();
 		//JRequest::watch($type_list);
 
 		//Assigning variable to view object so that it can be retrieve in default.php
 		$this->assignRef('property_detail_id',$detail_data['property_detail_id']);
 		$this->assignRef('property_id',$property_id);
 		$this->assignRef('title_text',$title_text);
+		$this->assignRef('measure_units', $measure_units);
 		$this->assignRef('condition_list', $condition_list);
 		$this->assignRef('detail_data', $detail_data);
 
